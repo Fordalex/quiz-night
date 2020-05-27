@@ -9,7 +9,7 @@ if path.exists("env.py"):
 
 app = Flask(__name__)
 
-DBURL = os.environ.get('DATABASE_URL')
+DBURL = os.environ.get('DBURL')
 
 app.config["MONGO_DBNAME"] = 'quiz'
 app.config["MONGO_URI"] = DBURL
