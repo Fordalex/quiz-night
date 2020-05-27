@@ -20,9 +20,7 @@ def index():
     mum_answers = mongo.db.mum.find()
     joseph_answers = mongo.db.joseph.find()
 
-
     return render_template('index.html', alex_answers=alex_answers,mum_answers=mum_answers ,joseph_answers=joseph_answers  )
-
 
 
 # save the users answers
