@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 DBURL = os.environ.get('DATABASE_URL')
 
-app.config["MONGO_DBNAME"] = 'task_manager'
+app.config["MONGO_DBNAME"] = 'quiz'
 app.config["MONGO_URI"] = DBURL
 
 
