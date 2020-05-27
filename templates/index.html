@@ -1,113 +1,340 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3 class="text-center my-4">Family Quiz</h3>
+<h2 class="text-center mt-2 mb-4">Family Quiz</h2>
 
-    <div class="row m-0 p-0">
-        <div class="col-12 col-lg-4">
-            <h6>Alex</h6>
-            <form action="{{ url_for('save_alex') }}" method="POST" class="mb-4">
-                <input name="answer" class="answer">
-                <button type="sumbit">Save</button>
-            </form>
-            {% for answer in alex_answers %}
-            <div class="row m-0 p-0">
-                <div class="col-6">
-                    <p"><b>{{loop.index}}.</b> <span class="alex_answers hidden">{{ answer.answer }}</span></p>
-                </div>
-                {% if loop.last %}
-                <div class="col-6">
-                    <a href="{{ url_for('delete_alex', data_id=answer._id )}}">
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                    </a>
-                </div>
-                {% endif %}
-                <div class="col-12">
-                    <hr>
-                </div> 
-                {% if loop.index == 5 %}
-                <div class="col-12">
-                    <button class="my-5 answers" id="alex">Reveal Alex's Answers!</button>
-                </div>
-                {% endif %}
-            </div>
-            {% endfor %}
-            
+<div class="d-flex justify-content-between">
+    <p class="m-0 mr-3">Logged in as: <b>{{ username }}</b></p>
+
+
+    {% if username == 'Alex' %}
+    <form action="{{ url_for('save_alex') }}" method="POST" class="mb-4">
+        <div class="d-flex justify-content-center">
+            <input name="answer" class="answer form-control mr-2" id="input">
+            <button type="sumbit" class="btn btn-success">Save</button>
         </div>
-        <div class="col-12 col-lg-4">
-            <h6>Mum</h6>
-            <form action="{{ url_for('save_mum') }}" method="POST" class="mb-4">
-                <input name="answer" class="answer">
-                <button type="sumbit">Save</button>
-            </form>
-            {% for answer in mum_answers %}
-            <div class="row m-0 p-0">
-                <div class="col-6">
-                    <p"><b>{{loop.index}}.</b> <span class="mum_answers hidden">{{ answer.answer }}</span></p>
-                </div>
-                {% if loop.last %}
-                <div class="col-6">
-                    <a href="{{ url_for('delete_mum', data_id=answer._id )}}">
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                    </a>
-                </div>
-                {% endif %}
-                <div class="col-12">
-                    <hr>
-                </div> 
-                {% if loop.index == 5 %}
-                <div class="col-12">
-                    <button class="my-5 answers" id="mum">Reveal Alex's Answers!</button>
-                </div>
-                {% endif %}
-            </div>
-            {% endfor %}
+ 
+    </form>
+    {% endif %}
+
+
+    {% if username == 'Mum' %}
+    <form action="{{ url_for('save_mum') }}" method="POST" class="mb-4">
+        <div class="d-flex justify-content-center">
+        <input name="answer" class="answer form-control mr-2" id="input">
+        <button type="sumbit "  class="btn btn-success">Save</button>
         </div>
-        <div class="col-12 col-lg-4">
-            <h6>Joseph</h6>
-            <form action="{{ url_for('save_joseph') }}" method="POST" class="mb-4">
-                <input name="answer" class="answer">
-                <button type="sumbit">Save</button>
-            </form>
-            {% for answer in joseph_answers %}
-            <div class="row m-0 p-0">
-                <div class="col-6">
-                    <p"><b>{{loop.index}}.</b> <span class="joseph_answers hidden">{{ answer.answer }}</span></p>
-                </div>
-                {% if loop.last %}
-                <div class="col-6">
-                    <a href="{{ url_for('delete_joseph', data_id=answer._id )}}">
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                    </a>
-                </div>
-                {% endif %}
-                <div class="col-12">
-                    <hr>
-                </div> 
-                {% if loop.index == 5 %}
-                <div class="col-12">
-                    <button class="my-5 answers" id="joseph">Reveal Alex's Answers!</button>
-                </div>
-                {% endif %}
-            </div>
-            {% endfor %}
+    </form>
+    {% endif %}
+
+    {% if username == 'Joseph' %}
+    <form action="{{ url_for('save_joseph') }}" method="POST" class="mb-4">
+        <div class="d-flex justify-content-center">
+        <input name="answer" class="answer form-control mr-2" id="input">
+        <button type="sumbit" class="btn btn-success">Save</button>
+        </div>
+    </form>
+    {% endif %}
+
+
+    <a href="{{ url_for('log_out') }}">
+        <button class="btn btn-warning">Log out</button>
+    </a>
+</div>
+{% if quizDoneButton %}
+<div class="col-12 d-flex justify-content-center mb-3">
+    <a href="{{ url_for('quiz_done') }}">
+        <button class="btn btn-success" id="quiz_finished">Finished Quiz</button>
+    </a>
+</div>
+{% endif %}
+
+<hr class="round-break">
+
+<!-- round one -->
+<div class="row m-0 p-0">
+    <div class="col-12 col-lg-4 mt-2">
+        <h4>Alex</h4>
+        <div class="quiz-master">
+            <p>Quiz Master</p>
         </div>
     </div>
 
-    <script>
+    <div class="col-12 col-lg-4 mt-2">
+        <h5>Mum</h5>
+        <h6>Round one:</h6>
+        {% for answer in mum_answers %}
+        {% if loop.index <= 10 %}
+        <div class="row m-0 p-0">
+            <div class="col-6">
+                {% if answers_hidden.hidden == 'True' %}
+                <p class="m-0"><b>{{loop.index}}.</b> <span class="answers hidden">{{ answer.answer }}</span></p>
+                {% else %}
+                <p class="m-0"><b>{{loop.index}}.</b> <span class="answers">{{ answer.answer }}</span></p>
+                {% endif %}
+            </div>
+            {% if username == 'Mum' %}
+            {% if loop.last %}
+            <div class="col-6 d-flex justify-content-end">
+                <a href="{{ url_for('delete_mum', data_id=answer._id )}}">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </a>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% if loop.index == 5 %}
+            <div class="col-12 m-0 p-0">
+                <h6>Round Two:</h6>
+            </div>
+            {% endif %}
+            <div class="col-12">
+                <hr>
+            </div>
+        </div>
 
-    
-        let timer = setTimeout(function() {
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="col-12 col-lg-4 mt-2">
+        <h4>Joseph</h4>
+        <h6>Round one:</h6>
+        {% for answer in joseph_answers %}
+        {% if loop.index <= 10 %}
+        <div class="row m-0 p-0">
+            <div class="col-6">
+                {% if answers_hidden.hidden == 'True' %}
+                <p class="m-0"><b>{{loop.index}}.</b> <span class="answers hidden">{{ answer.answer }}</span></p>
+                {% else %}
+                <p class="m-0"><b>{{loop.index}}.</b> <span class="answers">{{ answer.answer }}</span></p>
+                {% endif %}
+            </div>
+            {% if username == 'Joseph' %}
+            {% if loop.last %}
+            <div class="col-6 d-flex justify-content-end">
+                <a href="{{ url_for('delete_joseph', data_id=answer._id )}}">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </a>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% if loop.index == 5 %}
+            <div class="col-12 m-0 p-0">
+                <h6>Round Two:</h6>
+            </div>
+            {% endif %}
+            <div class="col-12">
+                <hr>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<hr class="round-break">
+
+<!-- round two -->
+<div class="row m-0 p-0">
+    <div class="col-12 col-lg-4">
+        <h6>Round one:</h6>
+        {% for answer in alex_answers %}
+        {% if loop.index <= 10 %}
+        <div class="row m-0 p-0">
+            <div class="col-6">
+                {% if answers_hidden.hidden == 'True' %}
+                <p class="m-0"><b>{{loop.index}}.</b> <span class="answers hidden">{{ answer.answer }}</span></p>
+                {% else %}
+                <p class="m-0"><b>{{loop.index}}.</b> <span class="answers">{{ answer.answer }}</span></p>
+                {% endif %}
+            </div>
+            {% if username == 'Alex' %}
+            {% if loop.last %}
+            <div class="col-6 d-flex justify-content-end">
+                <a href="{{ url_for('delete_alex', data_id=answer._id )}}">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </a>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% if loop.index == 5 %}
+            <div class="col-12 m-0 p-0">
+                <h6>Round Two:</h6>
+            </div>
+            {% endif %}
+            <div class="col-12">
+                <hr>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <div class="quiz-master">
+            <p>Quiz Master</p>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <h6>Round one:</h6>
+        {% for answer in joseph_answers_two %}
+        {% if loop.index > 10 %}
+        <div class="row m-0 p-0">
+            <div class="col-6">
+                {% if answers_hidden.hidden == 'True' %}
+                <p class="m-0"><b>{{loop.index}}.</b> <span class="answers hidden">{{ answer.answer }}</span></p>
+                {% else %}
+                <p class="m-0"><b>{{loop.index}}.</b> <span class="answers">{{ answer.answer }}</span></p>
+                {% endif %}
+            </div>
+            {% if username == 'Joseph' %}
+            {% if loop.last %}
+            <div class="col-6">
+                <a href="{{ url_for('delete_joseph', data_id=answer._id )}}">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </a>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% if loop.index == 15 %}
+            <div class="col-12 m-0 p-0">
+                <h6>Round Two:</h6>
+            </div>
+            {% endif %}
+            <div class="col-12">
+                <hr>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<hr class="round-break">
+
+<!-- round three -->
+<div class="row m-0 p-0">
+    <div class="col-12 col-lg-4">
+        <h6>Round one:</h6>
+        {% for answer in alex_answers_two %}
+        {% if loop.index > 10 %}
+        <div class="row m-0 p-0">
+            <div class="col-6">
+                {% if answers_hidden.hidden == 'True' %}
+                <p class="m-0"><b>{{loop.index}}.</b> <span class="answers hidden">{{ answer.answer }}</span></p>
+                {% else %}
+                <p class="m-0"><b>{{loop.index}}.</b> <span class="answers">{{ answer.answer }}</span></p>
+                {% endif %}
+            </div>
+            {% if username == 'Alex' %}
+            {% if loop.last %}
+            <div class="col-6">
+                <a href="{{ url_for('delete_alex', data_id=answer._id )}}">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </a>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% if loop.index == 15 %}
+            <div class="col-12 m-0 p-0">
+                <h6>Round Two:</h6>
+            </div>
+            {% endif %}
+            <div class="col-12">
+                <hr>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <h6>Round one:</h6>
+       {% for answer in mum_answers_two %}
+        {% if loop.index > 10 %}
+        <div class="row m-0 p-0">
+            <div class="col-6">
+                {% if answers_hidden.hidden == 'True' %}
+                <p class="m-0"><b>{{loop.index}}.</b> <span class="answers hidden">{{ answer.answer }}</span></p>
+                {% else %}
+                <p class="m-0"><b>{{loop.index}}.</b> <span class="answers">{{ answer.answer }}</span></p>
+                {% endif %}
+            </div>
+            {% if username == 'Mum' %}
+            {% if loop.last %}
+            <div class="col-6 d-flex justify-content-end">
+                <a href="{{ url_for('delete_mum', data_id=answer._id )}}">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </a>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% if loop.index == 15 %}
+            <div class="col-12 m-0 p-0">
+                <h6>Round Two:</h6>
+            </div>
+            {% endif %}
+            <div class="col-12">
+                <hr>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <div class="quiz-master">
+            <p>Quiz Master</p>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <script>
+    let timer = setTimeout(function () {
+        if ($('#input').val() == '') {
             location.reload();
-        }, 5000)
-    
-        $('.answer').on('keydown', function(e) {
-    
-            clearTimeout(timer)
-    
-            timer = setTimeout(function() {
+        }
+    }, 5000)
+    $('.answer').on('keydown', function (e) {
+        clearTimeout(timer)
+        timer = setTimeout(function () {
+            if ($('#input').val() == '') {
                 location.reload();
-            }, 5000)
-        });
-    
-    </script>
+            }
+        }, 4000)
+    });
+</script> -->
+
+
+
+
+
 {% endblock %}

@@ -1,3 +1,40 @@
 .hidden {
     filter: blur(10px);
 }
+
+hr {
+    margin: 2px;
+}
+
+.btn-danger {
+    padding: 0 15px;
+}
+
+/* enter page */
+
+.enter-container {
+    max-width: 500px;
+}
+
+/* family quiz */
+
+.quiz-master {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90%;
+    border: solid black 1px;
+    border-radius: 10px;
+    background: linear-gradient(rgb(223, 139, 43), rgb(247, 192, 129), rgb(238, 169, 90));
+}
+
+.quiz-master p {
+    font-size: 65px;
+}
+
+.round-break {
+    height: 3px;
+    background-color: black;
+    margin-top:10px;
+    margin-bottom: 10px;
+}
