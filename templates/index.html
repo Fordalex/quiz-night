@@ -3,10 +3,10 @@
 <h3 class="text-center my-4">Family Quiz</h3>
 
     <div class="row m-0 p-0">
-        <div class="col-4">
+        <div class="col-12 col-lg-4">
             <h6>Alex</h6>
             <form action="{{ url_for('save_alex') }}" method="POST" class="mb-4">
-                <input name="answer">
+                <input name="answer" class="answer">
                 <button type="sumbit">Save</button>
             </form>
             {% for answer in alex_answers %}
@@ -33,10 +33,10 @@
             {% endfor %}
             
         </div>
-        <div class="col-4">
+        <div class="col-12 col-lg-4">
             <h6>Mum</h6>
             <form action="{{ url_for('save_mum') }}" method="POST" class="mb-4">
-                <input name="answer">
+                <input name="answer" class="answer">
                 <button type="sumbit">Save</button>
             </form>
             {% for answer in mum_answers %}
@@ -62,10 +62,10 @@
             </div>
             {% endfor %}
         </div>
-        <div class="col-4">
+        <div class="col-12 col-lg-4">
             <h6>Joseph</h6>
             <form action="{{ url_for('save_joseph') }}" method="POST" class="mb-4">
-                <input name="answer">
+                <input name="answer" class="answer">
                 <button type="sumbit">Save</button>
             </form>
             {% for answer in joseph_answers %}
@@ -92,4 +92,22 @@
             {% endfor %}
         </div>
     </div>
+
+    <script>
+
+    
+        let timer = setTimeout(function() {
+            location.reload();
+        }, 5000)
+    
+        $('.answer').on('keydown', function(e) {
+    
+            clearTimeout(timer)
+    
+            timer = setTimeout(function() {
+                location.reload();
+            }, 5000)
+        });
+    
+    </script>
 {% endblock %}
