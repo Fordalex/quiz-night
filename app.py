@@ -138,6 +138,15 @@ def log_out():
 
     return redirect(url_for('user'))
 
+# restart quiz
+@app.route('/restart_quiz')
+def restart_quiz():
+    alex_answers = mongo.db.alex.remove()
+    mum_answers = mongo.db.mum.remove()
+    joseph_answers = mongo.db.joseph.remove()
+
+    return redirect(url_for('user'))
+
 
 if __name__ == '__main__':
     app.secret_key = 'mysecret'

@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2 class="text-center mt-2 mb-4">Family Quiz</h2>
+<div class="col-12 d-flex justify-content-end">
+    <img src="https://img.icons8.com/fluent/25/000000/settings.png" class="click-icon"  data-toggle="collapse" href="#settings"/>
+</div>
+<div class="collapse col-12" id="settings">
+    <a href="{{ url_for('restart_quiz') }}">
+        <button class="btn btn-danger">Restart Quiz</button>
+    </a>
+</div>
+<h2 class="text-center mb-4">Family Quiz</h2>
 
 <div class="d-flex justify-content-between">
     <div style="width:240px;">
@@ -234,6 +242,7 @@
 <!-- round three -->
 <div class="row m-0 p-0">
     <div class="col-12 col-lg-4">
+        <h4>Alex</h4>
         <h6>Round one:</h6>
         {% for answer in alex_answers_two %}
         {% if loop.index > 10 %}
@@ -269,6 +278,7 @@
     </div>
 
     <div class="col-12 col-lg-4">
+        <h4>Mum</h4>
         <h6>Round one:</h6>
        {% for answer in mum_answers_two %}
         {% if loop.index > 10 %}
@@ -303,6 +313,7 @@
     </div>
 
     <div class="col-12 col-lg-4">
+        <h4>Joseph</h4>
         <div class="quiz-master">
             <p>Quiz Master</p>
         </div>

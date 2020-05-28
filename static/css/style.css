@@ -27,6 +27,10 @@ p,a {
     font-family: 'Tenali Ramakrishna', sans-serif;
 }
 
+.click-icon {
+    cursor: pointer;
+}
+
 /* base */
 
 .page-container {
@@ -50,7 +54,7 @@ p,a {
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    height: 90%;
+    min-height: 350px;
     border: solid black 1px;
     border-radius: 10px;
     background: url('../img/quiz-master.JPG') center center no-repeat;
