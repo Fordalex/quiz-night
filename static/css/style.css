@@ -1,3 +1,8 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
 .hidden {
     filter: blur(10px);
 }
@@ -10,6 +15,25 @@ hr {
     padding: 0 15px;
 }
 
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Merriweather', serif;
+}
+
+p,a {
+    font-family: 'PT Sans', sans-serif;
+}
+
+.answers, b {
+    font-family: 'Tenali Ramakrishna', sans-serif;
+}
+
+/* base */
+
+.page-container {
+    width: 100%;
+    max-width: 1200px;
+}
+
 /* enter page */
 
 .enter-container {
@@ -18,18 +42,25 @@ hr {
 
 /* family quiz */
 
+.username-style {
+    font-size: 24px;
+}
+
 .quiz-master {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     height: 90%;
     border: solid black 1px;
     border-radius: 10px;
-    background: linear-gradient(rgb(223, 139, 43), rgb(247, 192, 129), rgb(238, 169, 90));
+    background: url('../img/quiz-master.JPG') center center no-repeat;
+    background-size: 100% 100%;
 }
 
 .quiz-master p {
-    font-size: 65px;
+    font-size: 30px;
+    color: black;
+    margin-bottom: 10px;
 }
 
 .round-break {
@@ -37,4 +68,16 @@ hr {
     background-color: black;
     margin-top:10px;
     margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 400px) {
+    .quiz-master p {
+        
+        font-size: 15px;
+    }
+    .quiz-master {
+        background: none;
+        align-items: center;
+        background-color: orange;
+    }
 }

@@ -3,64 +3,80 @@
 <h2 class="text-center mt-2 mb-4">Family Quiz</h2>
 
 <div class="d-flex justify-content-between">
-    <p class="m-0 mr-3">Logged in as: <b>{{ username }}</b></p>
-
-
+    <div style="width:240px;">
+        {% if username == 'Alex' %}
+        <h3>{{ alex_count }} / 20</h3>
+        {% endif %}
+        {% if username == 'Mum' %}
+        <h3>{{ mum_count }} / 20</h3>
+        {% endif %}
+        {% if username == 'Joseph' %}
+        <h3>{{ joseph_count }} / 20</h3>
+        {% endif %}
+        <p class="m-0 mr-3 d-inline">Logged in as: <b class="username-style">{{ username }}</b></p>
+        <a href="{{ url_for('log_out') }}" class="float-right">
+            <button class="btn btn-warning">Log out</button>
+        </a>
+    </div>
+    
     {% if username == 'Alex' %}
-    <form action="{{ url_for('save_alex') }}" method="POST" class="mb-4">
-        <div class="d-flex justify-content-center">
-            <input name="answer" class="answer form-control mr-2" id="input">
-            <button type="sumbit" class="btn btn-success">Save</button>
-        </div>
- 
-    </form>
+    <div>
+        <form action="{{ url_for('save_alex') }}" method="POST">
+            <div class="d-flex justify-content-center">
+                <input name="answer" class="answer form-control mr-2" id="input" placeholder="Answer here!"  spellcheck="true">
+                <button type="sumbit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
     {% endif %}
 
 
     {% if username == 'Mum' %}
-    <form action="{{ url_for('save_mum') }}" method="POST" class="mb-4">
+    <form action="{{ url_for('save_mum') }}" method="POST">
         <div class="d-flex justify-content-center">
-        <input name="answer" class="answer form-control mr-2" id="input">
-        <button type="sumbit "  class="btn btn-success">Save</button>
+        <input name="answer" class="answer form-control mr-2" id="input" placeholder="Answer here!"  spellcheck="true">
+        <button type="sumbit "  class="btn btn-primary">Submit</button>
         </div>
     </form>
     {% endif %}
 
     {% if username == 'Joseph' %}
-    <form action="{{ url_for('save_joseph') }}" method="POST" class="mb-4">
+    <form action="{{ url_for('save_joseph') }}" method="POST">
         <div class="d-flex justify-content-center">
-        <input name="answer" class="answer form-control mr-2" id="input">
-        <button type="sumbit" class="btn btn-success">Save</button>
+        <input name="answer" class="answer form-control mr-2" id="input" placeholder="Answer here!"  spellcheck="true">
+        <button type="sumbit" class="btn btn-primary">Submit</button>
         </div>
     </form>
     {% endif %}
 
 
-    <a href="{{ url_for('log_out') }}">
-        <button class="btn btn-warning">Log out</button>
-    </a>
+   <div>
+      <p class="m-0"><b>Alex</b>: {{ alex_count }} / 20</p>
+      <p class="m-0"><b>Mum</b>: {{ mum_count }} / 20</p>
+      <p class="m-0"><b>Joseph</b>: {{ joseph_count }} / 20</p>
+   </div>
 </div>
 {% if quizDoneButton %}
-<div class="col-12 d-flex justify-content-center mb-3">
+<div class="col-12 d-flex justify-content-center my-2">
     <a href="{{ url_for('quiz_done') }}">
-        <button class="btn btn-success" id="quiz_finished">Finished Quiz</button>
+        <button class="btn btn-success container-fluid" id="quiz_finished">Finished Quiz</button>
     </a>
 </div>
 {% endif %}
 
-<hr class="round-break">
+<hr class="round-break mt-0">
 
 <!-- round one -->
 <div class="row m-0 p-0">
-    <div class="col-12 col-lg-4 mt-2">
+    <div class="col-4 mt-2">
         <h4>Alex</h4>
         <div class="quiz-master">
             <p>Quiz Master</p>
         </div>
     </div>
 
-    <div class="col-12 col-lg-4 mt-2">
-        <h5>Mum</h5>
+    <div class="col-4 mt-2">
+        <h4>Mum</h4>
         <h6>Round one:</h6>
         {% for answer in mum_answers %}
         {% if loop.index <= 10 %}
@@ -95,7 +111,7 @@
         {% endfor %}
     </div>
 
-    <div class="col-12 col-lg-4 mt-2">
+    <div class="col-4 mt-2">
         <h4>Joseph</h4>
         <h6>Round one:</h6>
         {% for answer in joseph_answers %}
@@ -136,6 +152,7 @@
 <!-- round two -->
 <div class="row m-0 p-0">
     <div class="col-12 col-lg-4">
+        <h4>Alex</h4>
         <h6>Round one:</h6>
         {% for answer in alex_answers %}
         {% if loop.index <= 10 %}
@@ -170,12 +187,14 @@
     </div>
 
     <div class="col-12 col-lg-4">
+        <h4>Mum</h4>
         <div class="quiz-master">
             <p>Quiz Master</p>
         </div>
     </div>
 
     <div class="col-12 col-lg-4">
+        <h4>Joseph</h4>
         <h6>Round one:</h6>
         {% for answer in joseph_answers_two %}
         {% if loop.index > 10 %}
@@ -294,29 +313,6 @@
 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script>
     let timer = setTimeout(function () {
         if ($('#input').val() == '') {
@@ -329,7 +325,7 @@
             if ($('#input').val() == '') {
                 location.reload();
             }
-        }, 4000)
+        }, 5000)
     });
 </script>
 

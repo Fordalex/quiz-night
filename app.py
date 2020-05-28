@@ -65,7 +65,7 @@ def index(username):
     answers_hidden = mongo.db.quizSettings.find_one({'settings': 'one'})
 
 
-    return render_template('index.html', username=username, alex_answers=alex_answers, alex_answers_two=alex_answers_two, mum_answers=mum_answers, mum_answers_two=mum_answers_two, joseph_answers=joseph_answers, joseph_answers_two=joseph_answers_two, quizDoneButton=quizDoneButton, answers_hidden=answers_hidden  )
+    return render_template('index.html', username=username,alex_count=alex_count, alex_answers=alex_answers, alex_answers_two=alex_answers_two, mum_answers=mum_answers, mum_answers_two=mum_answers_two,mum_count=mum_count, joseph_answers=joseph_answers,joseph_count=joseph_count, joseph_answers_two=joseph_answers_two, quizDoneButton=quizDoneButton, answers_hidden=answers_hidden  )
 
 
 # save the users answers
