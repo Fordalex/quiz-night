@@ -106,23 +106,30 @@
         <div class="row m-0 p-0">
             {% for user in range(quiz.userCount) %}
             {% set usersName = quiz.usersNames[user] %}
-                <div class="col">
-                    <label class="mt-3">{{ usersName }} answers:</label>
-                    <br>
-                    <ol>
-                        <!-- display the categories -->
-                        {% for cat in range(quiz.categories) %}
-                            <h5>{{ quiz.usersData[quizMaster]['categories'][cat] }} Questions</h5>
-                             <!-- Users answers -->
-                            {% for answer in range(quiz.questionsCount) %}
-                                {% set answerIndex = cat * quiz.questionsCount %}
-                                {% set questionsPerRound = quiz.questionsCount * quiz.categories %}
-                                {% set roundIndex = round * questionsPerRound %}
-                                <li>{{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex] }} <b>{{ answer + answerIndex + roundIndex }}</b></li>
+                {% if usersName != quizMaster %}
+                    <div class="col">
+                        <label class="mt-3">{{ usersName }} answers:</label>
+                        <br>
+                        <ol class="p-0">
+                            <!-- display the categories -->
+                            {% for cat in range(quiz.categories) %}
+                                <h5 class="my-3">{{ quiz.usersData[quizMaster]['categories'][cat] }} Questions</h5>
+                                <!-- Users answers -->
+                                {% for answer in range(quiz.questionsCount) %}
+                                    {% set answerIndex = cat * quiz.questionsCount %}
+                                    {% set questionsPerRound = quiz.questionsCount * quiz.categories %}
+                                    {% set roundIndex = round * questionsPerRound %}
+                                    <!-- if user is quizMaster minus the number of questions per round -->
+                                    {% if user <= round %}
+                                        <li class="ml-4">{{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex - questionsPerRound] }}</li>
+                                    {% else %}
+                                        <li class="ml-4">{{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex] }}</li>
+                                    {% endif %}
+                                {% endfor %}
                             {% endfor %}
-                        {% endfor %}
-                    </ol>
-                </div>
+                        </ol>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
