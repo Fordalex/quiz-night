@@ -13,120 +13,111 @@ DBURL = os.environ.get('DATABASE_URL')
 
 app.config["MONGO_URI"] = DBURL
 
-
 mongo = PyMongo(app)
 
-# Select the username or return to the quiz
+# The setting page
 @app.route('/', methods=["GET", "POST"])
-def user():
+def settings():
+    if request.method == 'POST':
+        quizName = request.form['quizName']
+        userCount = request.form['userCount']
+        arrayOfUsers = {}
+        arrayOfNames = []
+
+        for user in range(int(userCount)):
+            userKey = 'user' + str(user + 1)
+            usersName = request.form[userKey]
+
+            aUser = {usersName : { 'answers': [], 'categories': []} }
+
+            arrayOfUsers.update(aUser)
+            arrayOfNames.append(usersName)
+
+        quiz = {
+            'quizName': quizName,
+            'userCount': int(userCount),
+            'usersData': arrayOfUsers,
+            'usersNames': arrayOfNames,
+        }
+
+        mongo.db.quizzes.insert_one(quiz)
+        return redirect('menu')
+
+
+    return render_template('settings.html')
+
+# find the quiz of your choose
+@app.route('/menu', methods=["GET","POST"])
+def menu():
+    if request.method == 'POST':
+        quizName = request.form['quizName']
+
+        if mongo.db.quizzes.find_one({'quizName': quizName}):
+            return redirect(url_for('user', quizName=quizName))
+
+    return render_template('menu.html')
+
+
+
+# Select the username or return to the quiz
+@app.route('/user/<quizName>', methods=["GET", "POST"])
+def user(quizName):
     if request.method == "POST":
         session["username"] = request.form['username']
 
     if "username" in session:
-        return redirect(url_for('categories', username=session["username"]))
+        return redirect(url_for('categories', username=session["username"], quizName=quizName))
 
-    return render_template('user.html')
+    quizName = mongo.db.quizzes.find_one({'quizName': quizName})
+
+    return render_template('user.html', quiz=quizName)
 
 
 # Add the categories for the quiz
-@app.route('/categories/<username>', methods=["GET", "POST"])
-def categories(username):
+@app.route('/categories/<username>/<quizName>', methods=["GET", "POST"])
+def categories(username, quizName):
     if request.method == "POST":
         catOne = request.form['catOne']
         catTwo = request.form['catTwo']
-        cats = {
-            'username': session['username'],
-            'catOne': catOne,
-            'catTwo': catTwo
-        }
-
-        mongo.db.categories.remove({'username': session['username']})
-        mongo.db.categories.insert_one(cats)
-        return redirect(url_for('index', username=session["username"]))
+        quiz = mongo.db.quizzes.find_one({'quizName': quizName})
+        usersCats = quiz['usersData'][username]['categories']
+        usersCats.append(catOne)
+        usersCats.append(catTwo)
+        mongo.db.quizzes.update({'quizName': quizName},quiz)
+        
+        return redirect(url_for('index', username=session["username"], quizName=quizName))
 
     return render_template('addcategories.html', username=username)
 
 
 # The quiz page with the user selected
-@app.route('/index/<username>')
-def index(username):
-    alex_answers = mongo.db.alex.find()
-    mum_answers = mongo.db.mum.find()
-    joseph_answers = mongo.db.joseph.find()
+@app.route('/index/<username>/<quizName>')
+def index(username, quizName):
 
-    alex_count = 0
-    for num in alex_answers:
-        alex_count += 1
-    
-    joseph_count = 0
-    for num in joseph_answers:
-        joseph_count += 1
-    
-    mum_count = 0
-    for num in mum_answers:
-        mum_count += 1
+    quizNameMongo = mongo.db.quizzes.find_one({'quizName': quizName})
+    session['quizName'] = quizName
 
-    alex_answers = mongo.db.alex.find()
-    alex_answers_two = mongo.db.alex.find()
-    mum_answers = mongo.db.mum.find()
-    mum_answers_two = mongo.db.mum.find()
-    joseph_answers = mongo.db.joseph.find()
-    joseph_answers_two = mongo.db.joseph.find()
-
-    print(alex_count,joseph_count,mum_count)
-
-    quizDoneButton = False
-    if alex_count >= 20 and mum_count >= 20 and joseph_count >= 20:
-        quizDoneButton = True
-    else:
-        quizSettings = mongo.db.quizSettings.update({'settings': 'one'},{
-        'settings': 'one',
-        'hidden': 'True'
-    })
-
-    answers_hidden = mongo.db.quizSettings.find_one({'settings': 'one'})
-
-    alexCategories = mongo.db.categories.find_one({'username': 'Alex'})
-    mumCategories = mongo.db.categories.find_one({'username': 'Mum'})
-    josephCategories = mongo.db.categories.find_one({'username': 'Joseph'})
-
-
-    return render_template('index.html', username=username,alex_count=alex_count,alexCategories=alexCategories, alex_answers=alex_answers, alex_answers_two=alex_answers_two, mum_answers=mum_answers,mumCategories=mumCategories, mum_answers_two=mum_answers_two,mum_count=mum_count, joseph_answers=joseph_answers,joseph_count=joseph_count, joseph_answers_two=joseph_answers_two,josephCategories=josephCategories, quizDoneButton=quizDoneButton, answers_hidden=answers_hidden  )
+    return render_template('quiz.html', quiz=quizNameMongo, username=username)
 
 
 # save the users answers
-@app.route('/save_alex', methods=['POST'])
-def save_alex():
+@app.route('/save', methods=['POST'])
+def save():
+    username = session['username']
+    quizName = session['quizName']
     answer = request.form['answer']
-    quiz_database = mongo.db.alex
-    quiz_answer = {
-        'answer': answer
-    }
 
-    quiz_database.insert_one(quiz_answer)
-    return redirect(url_for('index', username=session["username"]))
+    quiz = mongo.db.quizzes.find_one({'quizName': quizName})
+    usersAnswers = quiz['usersData'][username]['answers']
+    usersAnswers.append(answer)
 
-@app.route('/save_mum', methods=['POST'])
-def save_mum():
-    answer = request.form['answer']
-    quiz_database = mongo.db.mum
-    quiz_answer = {
-        'answer': answer
-    }
+    mongo.db.quizzes.update({'quizName': quizName},quiz)
 
-    quiz_database.insert_one(quiz_answer)
-    return redirect(url_for('index', username=session["username"]))
+    print(quiz['usersData'][username])
 
-@app.route('/save_joseph', methods=['POST'])
-def save_joseph():
-    answer = request.form['answer']
-    quiz_database = mongo.db.joseph
-    quiz_answer = {
-        'answer': answer
-    }
 
-    quiz_database.insert_one(quiz_answer)
-    return redirect(url_for('index', username=session["username"]))
+    return redirect(url_for('index',username=username, quizName=quizName))
+
 
 # delete the users answers
 @app.route('/delete_alex/<data_id>')
@@ -159,7 +150,7 @@ def quiz_done():
 def log_out():
     session.clear()
 
-    return redirect(url_for('user'))
+    return redirect(url_for('menu'))
 
 # restart quiz
 @app.route('/restart_quiz')
@@ -172,7 +163,7 @@ def restart_quiz():
 
     session.clear()
 
-    return redirect(url_for('user'))
+    return redirect(url_for('settings'))
 
 if __name__ == '__main__':
     app.secret_key = 'mysecret'

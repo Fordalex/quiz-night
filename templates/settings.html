@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="text-center my-4">Family Quiz</h2>
+
+<div class="d-flex justify-content-center">
+    <div class="enter-container">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <p class="m-0">If the quiz has already been created please go to:</p>
+                    <a href="menu"><button class="btn btn-success">Menu</button></a>
+                </div>
+            </div>
+            <p class="text-center">Welcome to your quiz!</p>
+            <form method="POST">
+                <div class="row m-0 p-0">
+                    <div class="col-12 m-0 p-0">
+                        <label>Create a unique quiz name?</label>
+                    </div>
+                    <div class="col-12 m-0 p-0">
+                        <input type="text" class="form-control" placeholder="Smith's quiz" name="quizName" required>
+                    </div>
+                    <div class="col-12 m-0 p-0 mt-2">
+                        <label>How many people are taking part in the quiz?</label>
+                    </div>
+                    <div class="col-12 m-0 p-0">
+                        <input type="number" class="form-control" min='2' value="2" id="userCount" name="userCount" required>
+                    </div>
+                    <div class="col-12 m-0 p-0 mt-2">
+                        <div class="btn btn-warning" onclick="addUsers()">Next</div>
+                    </div>
+                    <div id="usersContainer" class="container-fluid p-0">
+
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function addUsers() {
+        var amountOfUsers = $('#userCount').val()
+        $('#usersContainer').html('')
+        for (let i = 0; i < amountOfUsers; i++) {
+            $('#usersContainer').append(`
+            <div class="col-12 m-0 p-0 mt-2">
+                <label>User ${i + 1}</label>
+                <input type="text" name="user${i + 1}" class="form-control">
+            </div>
+            `)
+        }
+        $('#usersContainer').append('<button class="btn btn-success mt-2 container-fluid">Continue</button>')
+    }
+</script>
+
+
+
+{% endblock %}

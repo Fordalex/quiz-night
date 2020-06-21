@@ -6,15 +6,12 @@
 <div class="d-flex justify-content-center">
     <div class="enter-container">
         <div class="container-fluid">
-            <p>Welcome to our quiz, please select your name and enter!</p>
+            <p>Please enter the name of your quiz!</p>
             <form method="POST">
-                <select name="username" class="form-control">
-                    {% for user in range(quiz.userCount) %}
-                    <option>{{ quiz.usersNames[user] }}</option>
-                    {% endfor %}
-                </select>
+                <input type="text" name="quizName" class="form-control">
                 <button type="submit" class="btn btn-success form-control mt-3">Enter</button>
             </form>
+            <a href="/"><button class="btn btn-warning mt-2 container-fluid">Create A Quiz</button></a>
         </div>
    
     </div>

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-12 d-flex justify-content-end">
+    <img src="https://img.icons8.com/fluent/25/000000/settings.png" class="click-icon"  data-toggle="collapse" href="#settings"/>
+</div>
+<div class="collapse col-12" id="settings">
+    <a href="{{ url_for('restart_quiz') }}">
+        <button class="btn btn-danger">End Quiz</button>
+    </a>
+</div>
+<h2 class="text-center mb-4">{{quiz.quizName}}</h2>
+
+
+<div class="d-flex justify-content-between">
+    <div style="width:240px;">
+        <h3>0 /20</h3>
+        <p class="m-0 mr-3 d-block">Logged in as: <b class="username-style">{{ username }}</b></p>
+        <a href="{{ url_for('log_out') }}" class="float-left">
+            <button class="btn btn-warning">Log out</button>
+        </a>
+    </div>
+    <div class="mr-5">
+        <form action="{{ url_for('save') }}" method="POST" class="mr-5">
+            <div class="d-flex justify-content-center">
+                <input name="answer" class="answer form-control mr-2" id="input" placeholder="Answer here!"  spellcheck="true">
+                <button type="sumbit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        {% for user in range(quiz.userCount) %}
+            {% set usersName = quiz.usersNames[user] %}
+            <p class="m-0"><b>{{ usersName }}</b>: {{ quiz.usersData[usersName]['answers'] | length }} / 20</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="row m-0 p-0">
+    <div class="col-12 mb-3">
+        <h3 class="text-center">Round 1</h3>
+    </div>
+</div>
+
+<div class="row m-0 p-0">
+    {% for user in range(quiz.userCount) %}
+        <div class="col">
+            {% set usersName = quiz.usersNames[user] %}
+            <h5>{{ usersName }}</h5>
+            <label>Categories:</label>
+            <br>
+            {% for cat in range(2) %}
+                {{ quiz.usersData[usersName]['categories'][cat] }}
+            {% endfor %}
+            <br>
+            <label class="mt-3">Answers:</label>
+            <br>
+            <ol>
+                {% for answer in quiz['usersData'][usersName]['answers'] %}
+                    <li>{{ answer }}</li>
+                {% endfor %}
+            </ol>
+    
+        </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}
