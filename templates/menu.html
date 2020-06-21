@@ -5,13 +5,15 @@
 
 <div class="d-flex justify-content-center">
     <div class="enter-container">
-        <div class="container-fluid">
+        <div class="container-fluid p-0">
             <p>Please enter the name of your quiz!</p>
             <form method="POST">
                 <input type="text" name="quizName" class="form-control">
+                <label>Pin</label>
+                <input type="number" class="form-control" name="pin">
                 <button type="submit" class="btn btn-success form-control mt-3">Enter</button>
             </form>
-            <a href="/"><button class="btn btn-warning mt-2 container-fluid">Create A Quiz</button></a>
+            <a href="/"><button class="btn btn-warning mt-3 container-fluid">Create A Quiz</button></a>
         </div>
    
     </div>

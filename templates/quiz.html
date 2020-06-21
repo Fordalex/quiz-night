@@ -1,56 +1,52 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="col-12 d-flex justify-content-end">
-    <img src="https://img.icons8.com/fluent/25/000000/settings.png" class="click-icon"  data-toggle="collapse" href="#settings"/>
+
+<!-- Title and settings -->
+<div class="col-12 p-0">
+    <p class="m-0 mr-3 d-inline">Logged in as: <b class="username-style">{{ username }}</b></p>
+    <img src="https://img.icons8.com/fluent/25/000000/settings.png" class="click-icon float-right"  data-toggle="collapse" href="#settings"/>
 </div>
-<div class="collapse col-12" id="settings">
+<div class="collapse col-12 mt-3" id="settings">
     <a href="{{ url_for('restart_quiz') }}">
-        <button class="btn btn-danger">End Quiz</button>
+        <button class="btn btn-danger ">End Quiz</button>
+    </a>
+    <a href="{{ url_for('log_out') }}" class="float-right">
+        <button class="btn btn-warning">Log out</button>
     </a>
 </div>
+
+<!-- quiz name and player information -->
 <h2 class="text-center mb-4">{{quiz.quizName}}</h2>
 
-
-<div class="d-flex justify-content-between">
-    <div style="width:240px;">
-        <h3>0 /20</h3>
-        <p class="m-0 mr-3 d-block">Logged in as: <b class="username-style">{{ username }}</b></p>
-        <a href="{{ url_for('log_out') }}" class="float-left">
-            <button class="btn btn-warning">Log out</button>
-        </a>
+<div class="row m-0 p-0 mb-3">
+    <div class="col-3 p-0">
+        <p class="m-0">Total Players: {{ quiz.userCount }}</p>
     </div>
-    <div class="mr-5">
-        <form action="{{ url_for('save') }}" method="POST" class="mr-5">
-            <div class="d-flex justify-content-center">
-                <input name="answer" class="answer form-control mr-2" id="input" placeholder="Answer here!"  spellcheck="true">
-                <button type="sumbit" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
+    <div class="col-3 p-0">
+        <p class="m-0">Categories Per Player: {{ quiz.categories }}</p>
     </div>
-    <div>
-        {% for user in range(quiz.userCount) %}
-            {% set usersName = quiz.usersNames[user] %}
-            <p class="m-0"><b>{{ usersName }}</b>: {{ quiz.usersData[usersName]['answers'] | length }} / 20</p>
-        {% endfor %}
+    <div class="col-3 p-0">
+        <p class="m-0">Quesions Per Category: {{ quiz.questionsCount }}</p>
+    </div>
+    <div class="col-3 p-0">
+        <p class="m-0">Total Questions: {{ quiz.categories * quiz.questionsCount * quiz.userCount }}</p>
     </div>
 </div>
 
-<div class="row m-0 p-0">
-    <div class="col-12 mb-3">
-        <h3 class="text-center">Round 1</h3>
-    </div>
-</div>
+<hr class="mb-3">
 
 <div class="row m-0 p-0">
     {% for user in range(quiz.userCount) %}
         <div class="col">
             {% set usersName = quiz.usersNames[user] %}
-            <h5>{{ usersName }}</h5>
+            <h5>{{ usersName }}'s</h5>
             <label>Categories:</label>
             <br>
-            {% for cat in range(2) %}
-                {{ quiz.usersData[usersName]['categories'][cat] }}
+            <ol>
+            {% for cat in range(quiz.categories) %}
+                <li>{{ quiz.usersData[usersName]['categories'][cat] }}</li>
             {% endfor %}
+        </ol>
             <br>
             <label class="mt-3">Answers:</label>
             <br>
@@ -59,10 +55,37 @@
                     <li>{{ answer }}</li>
                 {% endfor %}
             </ol>
-    
         </div>
     {% endfor %}
+    <div class="col">
+        {% for user in range(quiz.userCount) %}
+            {% set usersName = quiz.usersNames[user] %}
+            <p class="m-0"><b>{{ usersName }}</b>: {{ quiz.usersData[usersName]['answers'] | length }} / {{ quiz.categories * quiz.questionsCount * quiz.userCount }}</p>
+        {% endfor %}
+    </div>
 </div>
 
+<hr class="mb-3">
+
+<!-- answer question -->
+<div class="row">
+    <div class="col-12">
+        <form action="{{ url_for('save') }}" method="POST" class="mr-5">
+            <div class="d-flex justify-content-center">
+                <input name="answer" class="answer form-control mr-2" id="input" placeholder="Answer here!"  spellcheck="true">
+                <button type="sumbit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- the rounds -->
+<div class="row m-0 p-0">
+    {% for round in range(quiz.userCount) %}
+    <div class="col-12 mb-3">
+        <h3 class="text-center">Round {{ round + 1 }}</h3>
+    </div>
+    {% endfor %}
+</div>
 
 {% endblock %}

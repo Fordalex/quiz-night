@@ -35,6 +35,9 @@ def settings():
 
         quiz = {
             'quizName': quizName,
+            'pin': request.form['pin'],
+            'categories': int(request.form['categories']),
+            'questionsCount': int(request.form['questionsCount']),
             'userCount': int(userCount),
             'usersData': arrayOfUsers,
             'usersNames': arrayOfNames,
@@ -51,8 +54,8 @@ def settings():
 def menu():
     if request.method == 'POST':
         quizName = request.form['quizName']
-
-        if mongo.db.quizzes.find_one({'quizName': quizName}):
+        pin = request.form['pin']
+        if mongo.db.quizzes.find_one({'quizName': quizName, 'pin': pin}):
             return redirect(url_for('user', quizName=quizName))
 
     return render_template('menu.html')
@@ -76,18 +79,28 @@ def user(quizName):
 # Add the categories for the quiz
 @app.route('/categories/<username>/<quizName>', methods=["GET", "POST"])
 def categories(username, quizName):
+    quiz = mongo.db.quizzes.find_one({'quizName': quizName})
     if request.method == "POST":
-        catOne = request.form['catOne']
-        catTwo = request.form['catTwo']
-        quiz = mongo.db.quizzes.find_one({'quizName': quizName})
         usersCats = quiz['usersData'][username]['categories']
-        usersCats.append(catOne)
-        usersCats.append(catTwo)
+        catNumber = 0
+        while True:
+            catNumber += 1
+            print(catNumber)
+            formName = 'cat' + str(catNumber)
+            try:
+                cat = request.form[formName]
+                usersCats.append(cat)
+                print(cat)
+                continue
+            except:
+                cat = False
+                break
+
         mongo.db.quizzes.update({'quizName': quizName},quiz)
         
         return redirect(url_for('index', username=session["username"], quizName=quizName))
 
-    return render_template('addcategories.html', username=username)
+    return render_template('addcategories.html', username=username, quiz=quiz)
 
 
 # The quiz page with the user selected

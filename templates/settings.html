@@ -5,21 +5,31 @@
 
 <div class="d-flex justify-content-center">
     <div class="enter-container">
-        <div class="container-fluid">
+        <div class="container-fluid p-0">
             <div class="row">
                 <div class="col-12">
                     <p class="m-0">If the quiz has already been created please go to:</p>
-                    <a href="menu"><button class="btn btn-success">Menu</button></a>
+                    <a href="menu"><button class="btn btn-success container-fluid my-2">Menu</button></a>
                 </div>
             </div>
             <p class="text-center">Welcome to your quiz!</p>
             <form method="POST">
                 <div class="row m-0 p-0">
                     <div class="col-12 m-0 p-0">
-                        <label>Create a unique quiz name?</label>
-                    </div>
-                    <div class="col-12 m-0 p-0">
+                        <label>Create a unique quiz name and pin?</label>
                         <input type="text" class="form-control" placeholder="Smith's quiz" name="quizName" required>
+                    </div>
+                    <div class="col-6 p-0 pr-3">
+                        <label>Secure Pin</label>
+                        <input type="number" class="form-control" name="pin">
+                    </div>
+                    <div class="col-6 p-0">
+                        <label>Categories</label>
+                        <input type="text" name="categories" class="form-control">
+                    </div>
+                    <div class="col-12 p-0">
+                        <label>Questions Per Category</label>
+                        <input type="text" name="questionsCount" class="form-control">
                     </div>
                     <div class="col-12 m-0 p-0 mt-2">
                         <label>How many people are taking part in the quiz?</label>
@@ -27,7 +37,7 @@
                     <div class="col-12 m-0 p-0">
                         <input type="number" class="form-control" min='2' value="2" id="userCount" name="userCount" required>
                     </div>
-                    <div class="col-12 m-0 p-0 mt-2">
+                    <div class="col-12 m-0 p-0 mt-3">
                         <div class="btn btn-warning" onclick="addUsers()">Next</div>
                     </div>
                     <div id="usersContainer" class="container-fluid p-0">
