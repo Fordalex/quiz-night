@@ -22,17 +22,22 @@
     <div class="col-7 col-md-12 p-0">
         <!-- quiz settings, how many questions and categories -->
         <div class="row">
-            <div class="col-12 col-md-3 p-0">
+            <div class="col-12 col-md p-0">
                 <p class="m-0">Total Players: {{ quiz.userCount }}</p>
             </div>
-            <div class="col-12 col-md-3 p-0">
+            <div class="col-12 col-md p-0">
                 <p class="m-0">Categories Per Player: {{ quiz.categories }}</p>
             </div>
-            <div class="col-12 col-md-3 p-0">
+            <div class="col-12 col-md p-0">
                 <p class="m-0">Quesions Per Category: {{ quiz.questionsCount }}</p>
             </div>
-            <div class="col-12 col-md-3 p-0">
-                <p class="m-0">Total Questions: {{ quiz.categories * quiz.questionsCount * quiz.userCount }}</p>
+            <div class="col-12 col-md p-0">
+                <p class="m-0">Quesions Per Round: {{ quiz.questionsCount * quiz.categories }}</p>
+            </div>
+            <div class="col-12 col-md p-0">
+                {% set usersQuestions = quiz.userCount - 1 %}
+                {% set totalQuestions = quiz.categories * quiz.questionsCount * usersQuestions %}
+                <p class="m-0">Total Questions: {{ totalQuestions }}</p>
             </div>
         </div>
 
@@ -41,7 +46,7 @@
     <div class="col-5 p-0 d-block d-md-none">
             {% for user in range(quiz.userCount) %}
                 {% set usersName = quiz.usersNames[user] %}
-                <p class="m-0 text-right"><b>{{ usersName }}</b>: {{ quiz.usersData[usersName]['answers'] | length }} / {{ quiz.categories * quiz.questionsCount * quiz.userCount }}</p>
+                <p class="m-0 text-right"><b>{{ usersName }}</b>: {{ quiz.usersData[usersName]['answers'] | length }} / {{ quiz.categories * quiz.questionsCount * usersQuestions }}</p>
             {% endfor %}
     </div>
 
@@ -76,7 +81,9 @@
         <form action="{{ url_for('save') }}" method="POST">
             <div class="d-flex justify-content-center">
                 <input name="answer" class="answer form-control mr-2" id="input" placeholder="{{ username }} Answer here!"  spellcheck="true">
-                <button type="sumbit" class="btn btn-primary">Answer</button>
+                {% if quiz.usersData[username]['answers'] | length < totalQuestions %}
+                    <button type="sumbit" class="btn btn-primary">Answer</button>
+                {% endif %}
             </div>
         </form>
     </div>
@@ -84,6 +91,9 @@
 
 <!-- the rounds -->
 <div class="row m-0 p-0">
+    <div class="col-12 m-0 p-0">
+        <hr>
+    </div>
     {% for round in range(quiz.userCount) %}
     <div class="col-12 mb-1 p-0 mt-3">
         <h3 class="text-center">Round {{ round + 1 }}</h3>
@@ -92,29 +102,39 @@
         <p class="text-secondary m-0 text-center">{{ quizMaster }} is the quiz master!</p>
     </div>
     <div class="col-10 m-0 p-0">
+        <!-- each round -->
         <div class="row m-0 p-0">
             {% for user in range(quiz.userCount) %}
             {% set usersName = quiz.usersNames[user] %}
-                {% if quizMaster != usersName %}
                 <div class="col">
                     <label class="mt-3">{{ usersName }} answers:</label>
                     <br>
                     <ol>
-                        {% for answer in quiz['usersData'][usersName]['answers'] %}
-                            <li>{{ answer }}</li>
+                        <!-- display the categories -->
+                        {% for cat in range(quiz.categories) %}
+                            <h5>{{ quiz.usersData[quizMaster]['categories'][cat] }} Questions</h5>
+                             <!-- Users answers -->
+                            {% for answer in range(quiz.questionsCount) %}
+                                {% set answerIndex = cat * quiz.questionsCount %}
+                                {% set questionsPerRound = quiz.questionsCount * quiz.categories %}
+                                {% set roundIndex = round * questionsPerRound %}
+                                <li>{{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex] }} <b>{{ answer + answerIndex + roundIndex }}</b></li>
+                            {% endfor %}
                         {% endfor %}
                     </ol>
                 </div>
-                {% endif %}
             {% endfor %}
         </div>
     </div>
     <!-- (desktop only) how many quesions have been answered from each player -->
     <div class="col-2 p-0 d-none d-md-block mb-3">
         {% for user in range(quiz.userCount) %}
-            {% set usersName = quiz.usersNames[user] %}
-            <p class="m-0 text-right"><b>{{ usersName }}</b>: {{ quiz.usersData[usersName]['answers'] | length }} / {{ quiz.categories * quiz.questionsCount * quiz.userCount }}</p>
+        {% set usersName = quiz.usersNames[user] %}
+        <p class="m-0 text-right"><b>{{ usersName }}</b>: {{ quiz.usersData[usersName]['answers'] | length }} / {{ quiz.categories * quiz.questionsCount * usersQuestions }}</p>
         {% endfor %}
+    </div>
+    <div class="col-12 m-0 p-0">
+        <hr>
     </div>
     {% endfor %}
 </div>
