@@ -41,7 +41,7 @@ p,a {
 /* enter page */
 
 .enter-container {
-    max-width: 500px;
+    width: 500px;
 }
 
 /* family quiz */

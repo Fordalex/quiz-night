@@ -52,7 +52,9 @@
     <form action="{{ url_for('save_joseph') }}" method="POST">
         <div class="d-flex justify-content-center">
         <input name="answer" class="answer form-control mr-2" id="input" placeholder="Answer here!"  spellcheck="true">
+        {% if joseph_count < 20 %}
         <button type="sumbit" class="btn btn-primary">Submit</button>
+        {% endif %}
         </div>
     </form>
     {% endif %}
@@ -71,21 +73,24 @@
     </a>
 </div>
 {% endif %}
-
+{% if mum_count < 10 and joseph_count < 10 or answers_hidden.hidden == 'False' %}
 <hr class="round-break mt-0">
 
 <!-- round one -->
 <div class="row m-0 p-0">
-    <div class="col-4 mt-2">
+    <div class="col-12 m-0 p-0">
+        <h4 class="text-center">Round One</h4>
+    </div>
+    <div class="col-12 col-lg-4 mt-2">
         <h4>Alex</h4>
         <div class="quiz-master">
             <p>Quiz Master</p>
         </div>
     </div>
 
-    <div class="col-4 mt-2">
+    <div class="col-12 col-lg-4 mt-2">
         <h4>Mum</h4>
-        <h6>Round one:</h6>
+        <h6>{{ alexCategories.catOne }} Questions:</h6>
         {% for answer in mum_answers %}
         {% if loop.index <= 10 %}
         <div class="row m-0 p-0">
@@ -107,7 +112,7 @@
             {% endif %}
             {% if loop.index == 5 %}
             <div class="col-12 m-0 p-0">
-                <h6>Round Two:</h6>
+                <h6>{{ alexCategories.catTwo }} Questions:</h6>
             </div>
             {% endif %}
             <div class="col-12">
@@ -119,9 +124,9 @@
         {% endfor %}
     </div>
 
-    <div class="col-4 mt-2">
+    <div class="col-12 col-lg-4 mt-2">
         <h4>Joseph</h4>
-        <h6>Round one:</h6>
+        <h6>{{ alexCategories.catOne }} Questions:</h6>
         {% for answer in joseph_answers %}
         {% if loop.index <= 10 %}
         <div class="row m-0 p-0">
@@ -143,7 +148,7 @@
             {% endif %}
             {% if loop.index == 5 %}
             <div class="col-12 m-0 p-0">
-                <h6>Round Two:</h6>
+                <h6>{{ alexCategories.catTwo }} Questions:</h6>
             </div>
             {% endif %}
             <div class="col-12">
@@ -154,14 +159,18 @@
         {% endfor %}
     </div>
 </div>
-
+{% endif %}
 <hr class="round-break">
 
+{% if mum_count >= 10 and joseph_count >= 10 and joseph_count < 20  or answers_hidden.hidden == 'False' %}
 <!-- round two -->
 <div class="row m-0 p-0">
+    <div class="col-12 m-0 p-0">
+        <h4 class="text-center">Round Two</h4>
+    </div>
     <div class="col-12 col-lg-4">
         <h4>Alex</h4>
-        <h6>Round one:</h6>
+        <h6>{{ mumCategories.catOne }} Questions:</h6>
         {% for answer in alex_answers %}
         {% if loop.index <= 10 %}
         <div class="row m-0 p-0">
@@ -183,7 +192,7 @@
             {% endif %}
             {% if loop.index == 5 %}
             <div class="col-12 m-0 p-0">
-                <h6>Round Two:</h6>
+                <h6>{{ mumCategories.catTwo }} Questions:</h6>
             </div>
             {% endif %}
             <div class="col-12">
@@ -203,7 +212,7 @@
 
     <div class="col-12 col-lg-4">
         <h4>Joseph</h4>
-        <h6>Round one:</h6>
+        <h6>{{ mumCategories.catOne }} Questions:</h6>
         {% for answer in joseph_answers_two %}
         {% if loop.index > 10 %}
         <div class="row m-0 p-0">
@@ -225,7 +234,7 @@
             {% endif %}
             {% if loop.index == 15 %}
             <div class="col-12 m-0 p-0">
-                <h6>Round Two:</h6>
+                <h6>{{ mumCategories.catTwo }} Questions:</h6>
             </div>
             {% endif %}
             <div class="col-12">
@@ -238,12 +247,17 @@
 </div>
 
 <hr class="round-break">
+{% endif %}
 
+{% if joseph_count >= 20 and alex_count >= 10  or answers_hidden.hidden == 'False' %}
 <!-- round three -->
 <div class="row m-0 p-0">
+    <div class="col-12 m-0 p-0">
+        <h4 class="text-center">Round Three</h4>
+    </div>
     <div class="col-12 col-lg-4">
         <h4>Alex</h4>
-        <h6>Round one:</h6>
+        <h6>{{ josephCategories.catOne }} Questions:</h6>
         {% for answer in alex_answers_two %}
         {% if loop.index > 10 %}
         <div class="row m-0 p-0">
@@ -265,7 +279,7 @@
             {% endif %}
             {% if loop.index == 15 %}
             <div class="col-12 m-0 p-0">
-                <h6>Round Two:</h6>
+                <h6>{{ josephCategories.catTwo }} Questions:</h6>
             </div>
             {% endif %}
             <div class="col-12">
@@ -279,7 +293,7 @@
 
     <div class="col-12 col-lg-4">
         <h4>Mum</h4>
-        <h6>Round one:</h6>
+        <h6>{{ josephCategories.catOne }} Questions:</h6>
        {% for answer in mum_answers_two %}
         {% if loop.index > 10 %}
         <div class="row m-0 p-0">
@@ -301,7 +315,7 @@
             {% endif %}
             {% if loop.index == 15 %}
             <div class="col-12 m-0 p-0">
-                <h6>Round Two:</h6>
+                <h6>{{ josephCategories.catTwo }} Questions:</h6>
             </div>
             {% endif %}
             <div class="col-12">
@@ -319,11 +333,11 @@
         </div>
     </div>
 
-
+    {% endif %}
 
 </div>
 
-
+{% if answers_hidden.hidden == 'True' %}
 <script>
     let timer = setTimeout(function () {
         if ($('#input').val() == '') {
@@ -339,7 +353,7 @@
         }, 5000)
     });
 </script>
-
+{% endif %}
 
 
 

@@ -16,16 +16,38 @@ app.config["MONGO_URI"] = DBURL
 
 mongo = PyMongo(app)
 
+# Select the username or return to the quiz
 @app.route('/', methods=["GET", "POST"])
 def user():
     if request.method == "POST":
         session["username"] = request.form['username']
 
     if "username" in session:
-        return redirect(url_for('index', username=session["username"]))
+        return redirect(url_for('categories', username=session["username"]))
 
     return render_template('user.html')
 
+
+# Add the categories for the quiz
+@app.route('/categories/<username>', methods=["GET", "POST"])
+def categories(username):
+    if request.method == "POST":
+        catOne = request.form['catOne']
+        catTwo = request.form['catTwo']
+        cats = {
+            'username': session['username'],
+            'catOne': catOne,
+            'catTwo': catTwo
+        }
+
+        mongo.db.categories.remove({'username': session['username']})
+        mongo.db.categories.insert_one(cats)
+        return redirect(url_for('index', username=session["username"]))
+
+    return render_template('addcategories.html', username=username)
+
+
+# The quiz page with the user selected
 @app.route('/index/<username>')
 def index(username):
     alex_answers = mongo.db.alex.find()
@@ -64,8 +86,12 @@ def index(username):
 
     answers_hidden = mongo.db.quizSettings.find_one({'settings': 'one'})
 
+    alexCategories = mongo.db.categories.find_one({'username': 'Alex'})
+    mumCategories = mongo.db.categories.find_one({'username': 'Mum'})
+    josephCategories = mongo.db.categories.find_one({'username': 'Joseph'})
 
-    return render_template('index.html', username=username,alex_count=alex_count, alex_answers=alex_answers, alex_answers_two=alex_answers_two, mum_answers=mum_answers, mum_answers_two=mum_answers_two,mum_count=mum_count, joseph_answers=joseph_answers,joseph_count=joseph_count, joseph_answers_two=joseph_answers_two, quizDoneButton=quizDoneButton, answers_hidden=answers_hidden  )
+
+    return render_template('index.html', username=username,alex_count=alex_count,alexCategories=alexCategories, alex_answers=alex_answers, alex_answers_two=alex_answers_two, mum_answers=mum_answers,mumCategories=mumCategories, mum_answers_two=mum_answers_two,mum_count=mum_count, joseph_answers=joseph_answers,joseph_count=joseph_count, joseph_answers_two=joseph_answers_two,josephCategories=josephCategories, quizDoneButton=quizDoneButton, answers_hidden=answers_hidden  )
 
 
 # save the users answers
@@ -118,9 +144,7 @@ def delete_joseph(data_id):
     mongo.db.joseph.remove({'_id': ObjectId(data_id)})
     return redirect(url_for('index', username=session["username"]))
 
-
 #quiz done
-
 @app.route('/quiz_done')
 def quiz_done():
     quizSettings = mongo.db.quizSettings.update({'settings': 'one'},{
@@ -131,7 +155,6 @@ def quiz_done():
     return redirect(url_for('index', username=session["username"]))
 
 # log out
-
 @app.route('/log_out')
 def log_out():
     session.clear()
@@ -144,9 +167,12 @@ def restart_quiz():
     alex_answers = mongo.db.alex.remove()
     mum_answers = mongo.db.mum.remove()
     joseph_answers = mongo.db.joseph.remove()
+    mongo.db.categories.remove()
+
+
+    session.clear()
 
     return redirect(url_for('user'))
-
 
 if __name__ == '__main__':
     app.secret_key = 'mysecret'
