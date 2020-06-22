@@ -16,20 +16,20 @@
             <form method="POST">
                 <div class="row m-0 p-0">
                     <div class="col-12 m-0 p-0">
-                        <label>Create a unique quiz name and pin?</label>
+                        <label>Create a unique quiz name!</label>
                         <input type="text" class="form-control" placeholder="Smith's quiz" name="quizName" required>
                     </div>
                     <div class="col-6 p-0 pr-3">
                         <label>Secure Pin</label>
-                        <input type="number" class="form-control" name="pin">
+                        <input type="number" class="form-control" placeholder="8849" name="pin" required>
                     </div>
                     <div class="col-6 p-0">
                         <label>Categories</label>
-                        <input type="text" name="categories" class="form-control">
+                        <input type="number" name="categories" placeholder="3" class="form-control" required>
                     </div>
                     <div class="col-12 p-0">
                         <label>Questions Per Category</label>
-                        <input type="text" name="questionsCount" class="form-control">
+                        <input type="number" name="questionsCount" placeholder="10" class="form-control" required>
                     </div>
                     <div class="col-12 m-0 p-0 mt-2">
                         <label>How many people are taking part in the quiz?</label>
@@ -60,7 +60,7 @@
             $('#usersContainer').append(`
             <div class="col-12 m-0 p-0 mt-2">
                 <label>User ${i + 1}</label>
-                <input type="text" name="user${i + 1}" class="form-control">
+                <input type="text" name="user${i + 1}" class="form-control" required>
             </div>
             `)
         }

@@ -41,6 +41,7 @@ def settings():
             'userCount': int(userCount),
             'usersData': arrayOfUsers,
             'usersNames': arrayOfNames,
+            'showAnswers': 'False',
         }
 
         mongo.db.quizzes.insert_one(quiz)

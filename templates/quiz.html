@@ -40,7 +40,6 @@
                 <p class="m-0">Total Questions: {{ totalQuestions }}</p>
             </div>
         </div>
-
     </div>
     <!-- (mobile only) how many quesions have been answered from each player -->
     <div class="col-5 p-0 d-block d-md-none">
@@ -121,9 +120,9 @@
                                     {% set roundIndex = round * questionsPerRound %}
                                     <!-- if user is quizMaster minus the number of questions per round -->
                                     {% if user <= round %}
-                                        <li class="ml-4">{{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex - questionsPerRound] }}</li>
+                                        <li class="ml-4"><span class="{% if quiz.showAnswers == 'False' %}hidden{% endif %}">{{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex - questionsPerRound] }}</span></li>
                                     {% else %}
-                                        <li class="ml-4">{{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex] }}</li>
+                                        <li class="ml-4"><span class="{% if quiz.showAnswers == 'False' %}hidden{% endif %}">{{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex] }}</span></li>
                                     {% endif %}
                                 {% endfor %}
                             {% endfor %}
