@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2 class="text-center my-4">Family Quiz</h2>
+<h2 class="text-center my-4">{{ quiz.quizName }}</h2>
 
 <div class="d-flex justify-content-center">
     <div class="enter-container">
         <div class="container-fluid p-0">
-            <p>Welcome to our quiz, please select your name and enter!</p>
+            <p class="text-center">Please select your name and enter!</p>
             <form method="POST">
                 <select name="username" class="form-control">
                     {% for user in range(quiz.userCount) %}
@@ -15,11 +15,21 @@
                 </select>
                 <button type="submit" class="btn btn-success form-control mt-3">Enter</button>
             </form>
+            <p class="my-3">Invite participants with the following link.</p>
+            <input type="text" value="You have been invited to: '{{ quiz.quizName }}', the secure pin number is: '{{ quiz.pin }}', go to: https://family-quiz-night.herokuapp.com/menu" id="myInput" class="form-control mt-3">
+            <button onclick="copyText()" class="container-fluid btn btn-info mt-3">Copy Invite Link</button>       
         </div>
-   
     </div>
- 
 </div>
 
+<!-- Js to copy the invite link -->
+<script>
+    function copyText() {
+      var copyText = document.getElementById("myInput");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+    }
+</script>
 
 {% endblock %}

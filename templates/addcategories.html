@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2 class="text-center my-4">Family Quiz</h2>
+<h2 class="text-center my-4">Quiz Master</h2>
 
 <div class="d-flex justify-content-center">
     <div class="enter-container">
-        <p>{{ username }} enter your categories for tonight!</p>
+        <p class="text-center">Welcome {{ username }}, enter your categories for tonight!</p>
         <form method="POST">
             {% for cat in range(quiz['categories']) %}
                 <label>Category {{ cat + 1 }}</label>
                 <input type="text" class="form-control" name="cat{{ cat + 1 }}" required>
             {% endfor %}
-            <button type="submit" class="btn btn-success form-control mt-3">Join Quiz</button>
+            <p class="text-center mt-3">Have a great quiz!</p>
+            <button type="submit" class="btn btn-success form-control mt-2">Join Quiz</button>
         </form>
     </div>
  

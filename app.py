@@ -45,7 +45,7 @@ def settings():
         }
 
         mongo.db.quizzes.insert_one(quiz)
-        return redirect('menu')
+        return redirect(url_for('user', quizName=quizName))
 
 
     return render_template('settings.html')
@@ -107,11 +107,32 @@ def categories(username, quizName):
 # The quiz page with the user selected
 @app.route('/index/<username>/<quizName>')
 def index(username, quizName):
-
     quizNameMongo = mongo.db.quizzes.find_one({'quizName': quizName})
     session['quizName'] = quizName
 
-    return render_template('quiz.html', quiz=quizNameMongo, username=username)
+    # find out the total amount of questions going to be asked.
+    userCountMinusOne = quizNameMongo['userCount'] 
+    totalQuestions = quizNameMongo['categories'] * quizNameMongo['questionsCount'] * userCountMinusOne
+
+    # How many questions have been answered
+    totalAnswers = 0
+    usersName = quizNameMongo['usersNames']
+
+    for user in usersName:
+        usersAnswersLength = len(quizNameMongo['usersData'][user]['answers'])
+        totalAnswers += usersAnswersLength
+
+    # if the total questions is the same as the questions answered
+    if totalAnswers == totalQuestions:
+        quizFinished = True
+    else:
+        quizFinished = False
+
+    print(totalQuestions)
+    print(totalAnswers)
+
+
+    return render_template('quiz.html', quiz=quizNameMongo, username=username, quizFinished=quizFinished)
 
 
 # save the users answers
@@ -128,7 +149,6 @@ def save():
     mongo.db.quizzes.update({'quizName': quizName},quiz)
 
     print(quiz['usersData'][username])
-
 
     return redirect(url_for('index',username=username, quizName=quizName))
 
@@ -149,15 +169,18 @@ def delete_joseph(data_id):
     mongo.db.joseph.remove({'_id': ObjectId(data_id)})
     return redirect(url_for('index', username=session["username"]))
 
-#quiz done
-@app.route('/quiz_done')
-def quiz_done():
-    quizSettings = mongo.db.quizSettings.update({'settings': 'one'},{
-        'settings': 'one',
-        'hidden': 'False'
-    })
+# quiz_finished
+@app.route('/quiz_finished')
+def quiz_finished():
+    # get the current quiz
+    quizName = session["quizName"]
+    quiz = mongo.db.quizzes.find_one({'quizName': quizName})
 
-    return redirect(url_for('index', username=session["username"]))
+    # change the show answers to true
+    quiz["showAnswers"] = "True"
+    mongo.db.quizzes.update({'quizName': quizName},quiz)
+
+    return redirect(url_for('index', username=session["username"], quizName=quizName))
 
 # log out
 @app.route('/log_out')
@@ -173,7 +196,6 @@ def restart_quiz():
     mum_answers = mongo.db.mum.remove()
     joseph_answers = mongo.db.joseph.remove()
     mongo.db.categories.remove()
-
 
     session.clear()
 

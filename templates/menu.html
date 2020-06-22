@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2 class="text-center my-4">Family Quiz</h2>
+<h2 class="text-center my-4">Quiz Master</h2>
 
 <div class="d-flex justify-content-center">
     <div class="enter-container">
         <div class="container-fluid p-0">
-            <p>Please enter the name of your quiz!</p>
+            <p class="text-center">Please enter the name of your quiz!</p>
             <form method="POST">
-                <input type="text" name="quizName" class="form-control">
-                <label>Pin</label>
-                <input type="number" class="form-control" name="pin">
+                <input type="text" name="quizName" class="form-control" placeholder="Smith's Quiz" required>
+                <label class="mt-2">Pin</label>
+                <input type="number" class="form-control" name="pin" placeholder="5467" required>
                 <button type="submit" class="btn btn-success form-control mt-3">Enter</button>
             </form>
             <a href="/"><button class="btn btn-warning mt-3 container-fluid">Create A Quiz</button></a>
