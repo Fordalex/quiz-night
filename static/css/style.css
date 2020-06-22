@@ -1,6 +1,7 @@
 body {
     display: flex;
     justify-content: center;
+    overflow-x: hidden;
 }
 
 .hidden {
@@ -41,21 +42,10 @@ p,a {
     width: 500px;
 }
 
-/* family quiz */
+/* quiz */
 
 .username-style {
     font-size: 24px;
-}
-
-.quiz-master {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    min-height: 350px;
-    border: solid black 1px;
-    border-radius: 10px;
-    background: url('../img/quiz-master.JPG') center center no-repeat;
-    background-size: 100% 100%;
 }
 
 .quiz-master p {
@@ -64,21 +54,28 @@ p,a {
     margin-bottom: 10px;
 }
 
-.round-break {
-    height: 3px;
-    background-color: black;
-    margin-top:10px;
-    margin-bottom: 10px;
+.round-wrapper {
+    overflow: auto;
+    white-space: nowrap;
 }
 
-@media only screen and (max-width: 400px) {
+.round-container {
+    min-width: 300px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.answers-list {
+    border: solid rgb(231, 231, 231) 1px;
+}
+
+.answers-list li:nth-child(even) {
+    background-color: rgb(243, 243, 243);
+}
+
+/* media quiries */
+@media only screen and (min-width: 750px) {
     .quiz-master p {
-        
         font-size: 15px;
-    }
-    .quiz-master {
-        background: none;
-        align-items: center;
-        background-color: orange;
     }
 }

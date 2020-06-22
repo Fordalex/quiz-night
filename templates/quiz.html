@@ -7,8 +7,8 @@
     <img src="https://img.icons8.com/fluent/25/000000/settings.png" class="click-icon float-right"  data-toggle="collapse" href="#settings"/>
 </div>
 <div class="collapse col-12 mt-3" id="settings">
-    <a href="{{ url_for('restart_quiz') }}">
-        <button class="btn btn-danger btn-sm">End Quiz</button>
+    <a href="{{ url_for('quiz_ended') }}">
+        <button class="btn btn-danger btn-sm">Finished Quiz</button>
     </a>
     <a href="{{ url_for('log_out') }}" class="float-right">
         <button class="btn btn-warning btn-sm">Log out</button>
@@ -24,7 +24,7 @@
 <div class="row m-0 p-0 px-2 mb-3">
     <div class="col-7 col-md-12 p-0">
         <!-- quiz settings, how many questions and categories -->
-        <div class="row">
+        <div class="row m-0 p-0">
             <div class="col-12 col-md p-0">
                 <p class="m-0">Total Players: {{ quiz.userCount }}</p>
             </div>
@@ -84,7 +84,7 @@
 <hr class="mb-3">
 
 <!-- answer question -->
-<div class="row p-0">
+<div class="row p-0 m-0">
     <div class="col-12 mb-3 px-2">
         <form action="{{ url_for('save') }}" method="POST">
             <div class="d-flex justify-content-center">
@@ -109,19 +109,18 @@
         {% set quizMaster = quiz.usersNames[round] %}
         <p class="text-secondary m-0 text-center">{{ quizMaster }} is the quiz master!</p>
     </div>
-    <div class="col-10 m-0 p-0">
+    <div class="col-12 m-0 p-0">
         <!-- each round -->
-        <div class="row m-0 p-0">
+        <div class="m-0 p-0 px-3 round-wrapper">
             {% for user in range(quiz.userCount) %}
             {% set usersName = quiz.usersNames[user] %}
                 {% if usersName != quizMaster %}
-                    <div class="col">
-                        <label class="mt-3">{{ usersName }} answers:</label>
-                        <br>
-                        <ol class="p-0">
+                    <div class="round-container">
+                        <h5 class="mt-3 mb-1">{{ usersName }} answers:</h5>
+                        <ol class="p-0 answers-list px-3 pb-3">
                             <!-- display the categories -->
                             {% for cat in range(quiz.categories) %}
-                                <h5 class="my-3">{{ quiz.usersData[quizMaster]['categories'][cat] }} Questions</h5>
+                                <h6 class="my-3">{{ quiz.usersData[quizMaster]['categories'][cat] }} Questions</h6>
                                 <!-- Users answers -->
                                 {% for answer in range(quiz.questionsCount) %}
                                     {% set answerIndex = cat * quiz.questionsCount %}

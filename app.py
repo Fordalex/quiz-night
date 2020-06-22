@@ -111,9 +111,9 @@ def index(username, quizName):
     session['quizName'] = quizName
 
     # find out the total amount of questions going to be asked.
-    userCountMinusOne = quizNameMongo['userCount'] 
-    totalQuestions = quizNameMongo['categories'] * quizNameMongo['questionsCount'] * userCountMinusOne
-
+    userCountMinusOne = quizNameMongo['userCount'] - 1
+    totalQuestionsPerPerson = quizNameMongo['categories'] * quizNameMongo['questionsCount'] * userCountMinusOne
+    totalQuestions = totalQuestionsPerPerson * quizNameMongo['userCount']
     # How many questions have been answered
     totalAnswers = 0
     usersName = quizNameMongo['usersNames']
@@ -190,12 +190,8 @@ def log_out():
     return redirect(url_for('menu'))
 
 # restart quiz
-@app.route('/restart_quiz')
-def restart_quiz():
-    alex_answers = mongo.db.alex.remove()
-    mum_answers = mongo.db.mum.remove()
-    joseph_answers = mongo.db.joseph.remove()
-    mongo.db.categories.remove()
+@app.route('/quiz_ended')
+def quiz_ended():
 
     session.clear()
 
