@@ -25,14 +25,16 @@
     </div>
 </div>
 
-<!-- Js to copy the invite link -->
-<script>
-    function copyText() {
-      var copyText = document.getElementById("myInput");
-      copyText.select();
-      copyText.setSelectionRange(0, 99999)
-      document.execCommand("copy");
-    }
-</script>
+{% endblock %}
 
+{% block js_content %}
+    <!-- Js to copy the invite link -->
+    <script>
+        function copyText() {
+        var copyText = document.getElementById("myInput");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999)
+        document.execCommand("copy");
+        }
+    </script>
 {% endblock %}

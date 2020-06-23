@@ -169,19 +169,20 @@
         <hr>
     </div>
     {% endfor %}
+
 </div>
+{% endblock %}
 
-<script>
-    // Will reload the quesion containers every 4 seconds
-    setInterval(function() {
-        for (let i = 0; i < {{quiz.userCount}}; i++) {
-            for (let j = 0; j < {{quiz.userCount}}; j++) {
-                var targetDiv = '#list-item-'.concat(i,'-',j)
-                $(targetDiv).load(document.URL + ' ' + targetDiv);
+{% block js_content %}
+    <script>
+        // Will reload the quesion containers every 4 seconds
+        setInterval(function() {
+            for (let i = 0; i < {{quiz.userCount}}; i++) {
+                for (let j = 0; j < {{quiz.userCount}}; j++) {
+                    var targetDiv = '#list-item-'.concat(i,'-',j)
+                    $(targetDiv).load(document.URL + ' ' + targetDiv);
+                }
             }
-        }
-    }, 4000);
-
-</script>
-
+        }, 4000);
+    </script>
 {% endblock %}
