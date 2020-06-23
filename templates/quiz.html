@@ -4,7 +4,8 @@
 <!-- Title and settings -->
 <div class="col-12 p-0">
     <p class="m-0 mr-3 d-inline">Logged in as: <b class="username-style">{{ username }}</b></p>
-    <img src="https://img.icons8.com/fluent/25/000000/settings.png" class="click-icon float-right"  data-toggle="collapse" href="#settings"/>
+    <img src="https://img.icons8.com/fluent/25/000000/settings.png" class="click-icon float-right"
+        data-toggle="collapse" href="#settings" />
 </div>
 <div class="collapse col-12 mt-3" id="settings">
     <a href="{{ url_for('quiz_ended') }}">
@@ -46,10 +47,14 @@
     </div>
     <!-- (mobile only) how many quesions have been answered from each player -->
     <div class="col-5 p-0 d-block d-md-none answer-count-container">
-            {% for user in range(quiz.userCount) %}
-                {% set usersName = quiz.usersNames[user] %}
-                <p class="m-0 text-right"><b>{% if quiz.usersData[usersName]['answers'] | length == quiz.categories * quiz.questionsCount * usersQuestions %}<img src="https://img.icons8.com/flat_round/12/000000/checkmark.png" class="mr-2"/>{% endif %}{{ usersName }}</b>: {{ quiz.usersData[usersName]['answers'] | length }} / {{ quiz.categories * quiz.questionsCount * usersQuestions }}</p>
-            {% endfor %}
+        {% for user in range(quiz.userCount) %}
+        {% set usersName = quiz.usersNames[user] %}
+        <p class="m-0 text-right">
+            <b>{% if quiz.usersData[usersName]['answers'] | length == quiz.categories * quiz.questionsCount * usersQuestions %}<img
+                    src="https://img.icons8.com/flat_round/12/000000/checkmark.png"
+                    class="mr-2" />{% endif %}{{ usersName }}</b>: {{ quiz.usersData[usersName]['answers'] | length }} /
+            {{ quiz.categories * quiz.questionsCount * usersQuestions }}</p>
+        {% endfor %}
     </div>
 </div>
 
@@ -65,23 +70,27 @@
     <div class="col-12 col-md-10 m-0 p-0">
         <div class="category-wrapper px-3">
             {% for user in range(quiz.userCount) %}
-                <div class="category-container">
-                    {% set usersName = quiz.usersNames[user] %}
-                    <h6>{{ usersName }}'s</h6>
-                    <ol class="pl-4 category-list">
-                        {% for cat in range(quiz.categories) %}
-                            <li class="text-center">{{ quiz.usersData[usersName]['categories'][cat] }}</li>
-                        {% endfor %}
-                    </ol>
-                </div>
+            <div class="category-container">
+                {% set usersName = quiz.usersNames[user] %}
+                <h6>{{ usersName }}'s</h6>
+                <ol class="pl-4 category-list">
+                    {% for cat in range(quiz.categories) %}
+                    <li class="text-center">{{ quiz.usersData[usersName]['categories'][cat] }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
             {% endfor %}
         </div>
     </div>
-      <!-- (Desktop only) how many quesions have been answered from each player -->
-      <div class="col p-0 d-none d-md-block answer-count-container">
+    <!-- (Desktop only) how many quesions have been answered from each player -->
+    <div class="col p-0 d-none d-md-block answer-count-container">
         {% for user in range(quiz.userCount) %}
-            {% set usersName = quiz.usersNames[user] %}
-            <p class="m-0 text-right"><b>{% if quiz.usersData[usersName]['answers'] | length == quiz.categories * quiz.questionsCount * usersQuestions %}<img src="https://img.icons8.com/flat_round/12/000000/checkmark.png" class="mr-2"/>{% endif %}{{ usersName }}</b>: {{ quiz.usersData[usersName]['answers'] | length }} / {{ quiz.categories * quiz.questionsCount * usersQuestions }}</p>
+        {% set usersName = quiz.usersNames[user] %}
+        <p class="m-0 text-right">
+            <b>{% if quiz.usersData[usersName]['answers'] | length == quiz.categories * quiz.questionsCount * usersQuestions %}<img
+                    src="https://img.icons8.com/flat_round/12/000000/checkmark.png"
+                    class="mr-2" />{% endif %}{{ usersName }}</b>: {{ quiz.usersData[usersName]['answers'] | length }} /
+            {{ quiz.categories * quiz.questionsCount * usersQuestions }}</p>
         {% endfor %}
     </div>
 </div>
@@ -93,7 +102,8 @@
     <div class="col-12 mb-3 px-2">
         <form action="{{ url_for('save') }}" method="POST">
             <div class="d-flex justify-content-center">
-                <input name="answer" class="answer form-control mr-2" id="input" placeholder="{{ username }} Answer Here!"  spellcheck="true">
+                <input name="answer" class="answer form-control mr-2" id="input"
+                    placeholder="{{ username }} Answer Here!" spellcheck="true">
                 <button type="sumbit" class="btn btn-primary">Answer</button>
             </div>
         </form>
@@ -101,11 +111,11 @@
 </div>
 <!-- If user has answered all their questions -->
 {% else %}
-    {% if quizFinished == True and quiz.showAnswers == 'True' %}
-        <p class="m-0 text-center my-2 mb-3 text-success">Waiting for other players to finish the quiz!</p>
-    {% else %}
-        <p class="m-0 text-center my-2 mb-3 text-success">Show the answers when your ready!</p>
-    {% endif %}
+{% if quizFinished == True and quiz.showAnswers == 'True' %}
+<p class="m-0 text-center my-2 mb-3 text-success">Waiting for other players to finish the quiz!</p>
+{% else %}
+<p class="m-0 text-center my-2 mb-3 text-success">Show the answers when your ready!</p>
+{% endif %}
 {% endif %}
 
 <!-- the rounds -->
@@ -122,31 +132,35 @@
     </div>
     <div class="col-12 m-0 p-0">
         <!-- each round -->
-        <div class="m-0 p-0 px-3 round-wrapper">
+        <div class="m-0 p-0 px-3 round-wrapper" >
             {% for user in range(quiz.userCount) %}
-            {% set usersName = quiz.usersNames[user] %}
+                {% set usersName = quiz.usersNames[user] %}
                 {% if usersName != quizMaster %}
-                    <div class="round-container">
-                        <h5 class="mt-3 mb-1">{{ usersName }} answers:</h5>
-                        <ol class="p-0 answers-list px-3 pb-3">
-                            <!-- display the categories -->
-                            {% for cat in range(quiz.categories) %}
-                                <h6 class="my-3">{{ quiz.usersData[quizMaster]['categories'][cat] }} Questions</h6>
-                                <!-- Users answers -->
-                                {% for answer in range(quiz.questionsCount) %}
-                                    {% set answerIndex = cat * quiz.questionsCount %}
-                                    {% set questionsPerRound = quiz.questionsCount * quiz.categories %}
-                                    {% set roundIndex = round * questionsPerRound %}
-                                    <!-- if user is quizMaster minus the number of questions per round -->
-                                    {% if user <= round %}
-                                        <li class="ml-4"><span class="{% if quiz.showAnswers == 'False' %}hidden{% endif %}">{{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex - questionsPerRound] }}</span></li>
-                                    {% else %}
-                                        <li class="ml-4"><span class="{% if quiz.showAnswers == 'False' %}hidden{% endif %}">{{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex] }}</span></li>
-                                    {% endif %}
-                                {% endfor %}
+                <div class="round-container" id="list-item-{{round}}-{{user}}">
+                    <h5 class="mt-3 mb-1">{{ usersName }} answers:</h5>
+                    <ol class="p-0 answers-list px-3 pb-3">
+                        <!-- display the categories -->
+                        {% for cat in range(quiz.categories) %}
+                            <h6 class="my-3">{{ quiz.usersData[quizMaster]['categories'][cat] }} Questions</h6>
+                            <!-- Users answers -->
+                            {% for answer in range(quiz.questionsCount) %}
+                                {% set answerIndex = cat * quiz.questionsCount %}
+                                {% set questionsPerRound = quiz.questionsCount * quiz.categories %}
+                                {% set roundIndex = round * questionsPerRound %}
+                                <!-- if user is quizMaster minus the number of questions per round -->
+                                {% if user <= round %}
+                                    <li class="ml-4"><span
+                                            class="{% if quiz.showAnswers == 'False' %}hidden{% endif %}">{{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex - questionsPerRound] }}</span>
+                                    </li>
+                                {% else %}
+                                    <li class="ml-4"><span
+                                            class="{% if quiz.showAnswers == 'False' %}hidden{% endif %}">{{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex] }}</span>
+                                    </li>
+                                {% endif %}
                             {% endfor %}
-                        </ol>
-                    </div>
+                        {% endfor %}
+                    </ol>
+                </div>
                 {% endif %}
             {% endfor %}
         </div>
@@ -156,5 +170,18 @@
     </div>
     {% endfor %}
 </div>
+
+<script>
+    // Will reload the quesion containers every 4 seconds
+    setInterval(function() {
+        for (let i = 0; i < {{quiz.userCount}}; i++) {
+            for (let j = 0; j < {{quiz.userCount}}; j++) {
+                var targetDiv = '#list-item-'.concat(i,'-',j)
+                $(targetDiv).load(document.URL + ' ' + targetDiv);
+            }
+        }
+    }, 4000);
+
+</script>
 
 {% endblock %}
