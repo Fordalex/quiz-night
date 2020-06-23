@@ -5,7 +5,8 @@ body {
 }
 
 .hidden {
-    filter: blur(10px);
+    filter: blur(4px);
+    text-decoration: line-through;
 }
 
 hr {
@@ -85,9 +86,10 @@ p,a {
 }
 
 .round-container {
-    min-width: 300px;
+    min-width: 200px;
     display: inline-block;
-    margin-right: 10px;
+    margin-right:  0 ;
+    margin-left: 0 ;
 }
 
 .answers-list {

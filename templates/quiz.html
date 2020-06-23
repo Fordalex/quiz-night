@@ -49,7 +49,6 @@
             {% for user in range(quiz.userCount) %}
                 {% set usersName = quiz.usersNames[user] %}
                 <p class="m-0 text-right"><b>{% if quiz.usersData[usersName]['answers'] | length == quiz.categories * quiz.questionsCount * usersQuestions %}<img src="https://img.icons8.com/flat_round/12/000000/checkmark.png" class="mr-2"/>{% endif %}{{ usersName }}</b>: {{ quiz.usersData[usersName]['answers'] | length }} / {{ quiz.categories * quiz.questionsCount * usersQuestions }}</p>
-            
             {% endfor %}
     </div>
 </div>
@@ -87,24 +86,27 @@
     </div>
 </div>
 
-      
-   
-
 <hr class="mb-3">
-
+{% if quiz.usersData[username]['answers'] | length < totalQuestions %}
 <!-- answer question -->
 <div class="row p-0 m-0">
     <div class="col-12 mb-3 px-2">
         <form action="{{ url_for('save') }}" method="POST">
             <div class="d-flex justify-content-center">
                 <input name="answer" class="answer form-control mr-2" id="input" placeholder="{{ username }} Answer Here!"  spellcheck="true">
-                {% if quiz.usersData[username]['answers'] | length < totalQuestions %}
-                    <button type="sumbit" class="btn btn-primary">Answer</button>
-                {% endif %}
+                <button type="sumbit" class="btn btn-primary">Answer</button>
             </div>
         </form>
     </div>
 </div>
+<!-- If user has answered all their questions -->
+{% else %}
+    {% if quizFinished == True and quiz.showAnswers == 'True' %}
+        <p class="m-0 text-center my-2 mb-3 text-success">Waiting for other players to finish the quiz!</p>
+    {% else %}
+        <p class="m-0 text-center my-2 mb-3 text-success">Show the answers when your ready!</p>
+    {% endif %}
+{% endif %}
 
 <!-- the rounds -->
 <div class="row m-0 p-0">

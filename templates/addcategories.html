@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2 class="text-center my-4">Quiz Master</h2>
+<h2 class="text-center mt-3 mb-2">{{ quiz.quizName }}</h2>
+<h6 class="m-0 text-secondary text-center mb-3">Categoires</h6>
+<hr class="mb-2">
 
 <div class="d-flex justify-content-center">
     <div class="enter-container">
-        <p class="text-center">Welcome {{ username }}, enter your categories for tonight!</p>
+        <h5 class="text-center my-3">Welcome {{ username }}, enter your categories for the quiz!</h5>
         <form method="POST">
             {% for cat in range(quiz['categories']) %}
                 <label>Category {{ cat + 1 }}</label>
@@ -14,6 +16,9 @@
             <p class="text-center mt-3">Have a great quiz!</p>
             <button type="submit" class="btn btn-success form-control mt-2">Join Quiz</button>
         </form>
+        <a href="{{ url_for('log_out') }}" class="container-fluid p-0">
+            <button class="btn btn-warning mt-3 container-fluid">Back to Lobby</button>
+        </a>
     </div>
  
 </div>

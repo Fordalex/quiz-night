@@ -1,17 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2 class="text-center my-4">Quiz Master</h2>
+<!-- Page title -->
+<h2 class="text-center mt-3 mb-2">Quiz Master</h2>
+<h6 class="m-0 text-secondary text-center mb-3">Settings</h6>
+<hr class="mb-2">
 
 <div class="d-flex justify-content-center">
     <div class="enter-container">
         <div class="container-fluid p-0">
-            <div class="row">
-                <div class="col-12">
-                    <p class="m-0">If the quiz has already been created please go to:</p>
-                    <a href="menu"><button class="btn btn-success container-fluid my-2">Menu</button></a>
-                </div>
-            </div>
             <h5 class="text-center my-2">Enter Your Settings</h5>
             <form method="POST">
                 <div class="row m-0 p-0">
@@ -38,18 +35,24 @@
                         <input type="number" class="form-control" min='2' placeholder="2" id="userCount" name="userCount" required>
                     </div>
                     <div class="col-12 m-0 p-0 mt-3">
-                        <div class="btn btn-warning" onclick="addUsers()">Next</div>
+                        <div class="btn btn-info" onclick="addUsers()">Next</div>
                     </div>
                     <div id="usersContainer" class="container-fluid p-0">
 
                     </div>
-
                 </div>
             </form>
-
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p class="m-0 my-2 mt-4 text-secondary">If the quiz has already been created please go to:</p>
+                <a href="/"><button class="btn btn-warning container-fluid my-2">Menu</button></a>
+            </div>
         </div>
     </div>
 </div>
+
+
 
 
 <script>
@@ -62,12 +65,12 @@
             for (let i = 0; i < amountOfUsers; i++) {
             $('#usersContainer').append(`
             <div class="col-12 m-0 p-0 mt-2">
-                <label>User ${i + 1}</label>
+                <label>Player ${i + 1}</label>
                 <input type="text" name="user${i + 1}" class="form-control" required>
             </div>
             `)
         }
-        $('#usersContainer').append('<button class="btn btn-success mt-3 container-fluid">Continue</button>')
+        $('#usersContainer').append('<button class="btn btn-success mt-3 container-fluid">Create Quiz</button>')
         }
     
     }
