@@ -155,14 +155,15 @@ def index():
 # save the users answers
 @app.route('/save', methods=['POST'])
 def save():
+    # Get the current quiz, user and the answer submitted.
     username = session['username']
     quizName = session['quizName']
     answer = request.form['answer']
 
+    # Find the current quiz from the database and add the answer.
     quiz = mongo.db.quizzes.find_one({'quizName': quizName})
     usersAnswers = quiz['usersData'][username]['answers']
-    usersAnswers.append(answer)
-
+    usersAnswers.append({'answer': answer, 'correct': 'False'})
     mongo.db.quizzes.update({'quizName': quizName},quiz)
 
     return redirect(url_for('index',username=username, quizName=quizName))

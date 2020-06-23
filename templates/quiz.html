@@ -151,6 +151,7 @@
     {% for round in range(quiz.userCount) %}
     <div class="col-12 mb-1 p-0 mt-3">
         <h3 class="text-center">Round {{ round + 1 }}</h3>
+
         <!-- shows who's quiz master -->
         {% set quizMaster = quiz.usersNames[round] %}
         <p class="text-secondary m-0 text-center">{{ quizMaster }} is the quiz master!</p>
@@ -175,11 +176,19 @@
                     <!-- if user is quizMaster minus the number of questions per round -->
                     {% if user <= round %}
                     <li class="ml-4"><span
-                            class="{% if quiz.showAnswers == 'False' %}hidden{% endif %}">{{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex - questionsPerRound] }}</span>
+                            class="{% if quiz.showAnswers == 'False' %}hidden{% endif %}">
+                            {% if quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex - questionsPerRound] %}
+                                {{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex - questionsPerRound]['answer'] }}
+                            {% endif %}
+                        </span>
                     </li>
                     {% else %}
                     <li class="ml-4"><span
-                            class="{% if quiz.showAnswers == 'False' %}hidden{% endif %}">{{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex] }}</span>
+                            class="{% if quiz.showAnswers == 'False' %}hidden{% endif %}">
+                            {% if quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex] %}
+                                {{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex]['answer'] }}
+                            {% endif %}
+                        </span>
                     </li>
                     {% endif %}
                     {% endfor %}
@@ -208,6 +217,6 @@
         $(targetDiv).load(document.URL + ' ' + targetDiv);
     }
             }
-        }, 4000);
+        }, 40000);
 </script>
 {% endblock %}
