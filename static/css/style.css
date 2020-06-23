@@ -22,7 +22,7 @@ p,a {
     font-family: 'PT Sans', sans-serif;
 }
 
-.answers, b {
+.answers, .username-style {
     font-family: 'Tenali Ramakrishna', sans-serif;
 }
 
@@ -47,6 +47,11 @@ p,a {
 
 .username-style {
     font-size: 24px;
+}
+
+.left-right-border {
+    border-right: solid grey 1px;
+    border-left: solid grey 1px;
 }
 
 .quiz-master p {
