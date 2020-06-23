@@ -192,10 +192,12 @@ def log_out():
 # restart quiz
 @app.route('/quiz_ended')
 def quiz_ended():
+    # get the current quiz
+    quizName = session["quizName"]
+    quiz = mongo.db.quizzes.remove({'quizName': quizName})
 
     session.clear()
-
-    return redirect(url_for('settings'))
+    return redirect(url_for('menu'))
 
 if __name__ == '__main__':
     app.secret_key = 'mysecret'

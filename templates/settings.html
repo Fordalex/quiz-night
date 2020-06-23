@@ -12,7 +12,7 @@
                     <a href="menu"><button class="btn btn-success container-fluid my-2">Menu</button></a>
                 </div>
             </div>
-            <p class="text-center">Please create your quiz!</p>
+            <h5 class="text-center my-2">Enter Your Settings</h5>
             <form method="POST">
                 <div class="row m-0 p-0">
                     <div class="col-12 m-0 p-0">
@@ -57,7 +57,7 @@
         var amountOfUsers = $('#userCount').val()
         $('#usersContainer').html('')
         if (amountOfUsers < 1) {
-            $('#usersContainer').append('<p class="text-danger mt-2">Please add the amount of people taking part in the quiz.</p>');
+            $('#usersContainer').append('<p class="text-danger mt-2">Please enter the amount of people taking part in the quiz.</p>');
         } else {
             for (let i = 0; i < amountOfUsers; i++) {
             $('#usersContainer').append(`

@@ -54,6 +54,31 @@ p,a {
     margin-bottom: 10px;
 }
 
+.answer-count-container {
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.category-wrapper {
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.category-container {
+    min-width: 100px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.category-list {
+    border: solid rgb(231, 231, 231) 1px;
+    padding: 5px;
+}
+
+.category-list li:nth-child(even) {
+    background-color: rgb(243, 243, 243);
+}
+
 .round-wrapper {
     overflow: auto;
     white-space: nowrap;

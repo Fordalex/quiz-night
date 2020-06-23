@@ -45,7 +45,7 @@
         </div>
     </div>
     <!-- (mobile only) how many quesions have been answered from each player -->
-    <div class="col-5 p-0 d-block d-md-none">
+    <div class="col-5 p-0 d-block d-md-none answer-count-container">
             {% for user in range(quiz.userCount) %}
                 {% set usersName = quiz.usersNames[user] %}
                 <p class="m-0 text-right"><b>{% if quiz.usersData[usersName]['answers'] | length == quiz.categories * quiz.questionsCount * usersQuestions %}<img src="https://img.icons8.com/flat_round/12/000000/checkmark.png" class="mr-2"/>{% endif %}{{ usersName }}</b>: {{ quiz.usersData[usersName]['answers'] | length }} / {{ quiz.categories * quiz.questionsCount * usersQuestions }}</p>
@@ -57,29 +57,38 @@
 <hr class="mb-3">
 
 <!-- The players and their categories -->
-<div class="row m-0 p-0 justify-content-center">
+<div class="row m-0 p-0">
     <div class="col-12 m-0 p-0">
         <h5 class="text-center mb-3">Categories</h5>
     </div>
-    {% for user in range(quiz.userCount) %}
-        <div class="col">
-            {% set usersName = quiz.usersNames[user] %}
-            <h6>{{ loop.index }}. {{ usersName }}'s</h6>
-            <ol>
-            {% for cat in range(quiz.categories) %}
-                <li>{{ quiz.usersData[usersName]['categories'][cat] }}</li>
+</div>
+<div class="row m-0 p-0">
+    <div class="col-12 col-md-10 m-0 p-0">
+        <div class="category-wrapper px-3">
+            {% for user in range(quiz.userCount) %}
+                <div class="category-container">
+                    {% set usersName = quiz.usersNames[user] %}
+                    <h6>{{ usersName }}'s</h6>
+                    <ol class="pl-4 category-list">
+                        {% for cat in range(quiz.categories) %}
+                            <li class="text-center">{{ quiz.usersData[usersName]['categories'][cat] }}</li>
+                        {% endfor %}
+                    </ol>
+                </div>
             {% endfor %}
-        </ol>
         </div>
-    {% endfor %}
-    <!-- (Desktop only) how many quesions have been answered from each player -->
-    <div class="col-3 p-0 d-none d-md-block">
+    </div>
+      <!-- (Desktop only) how many quesions have been answered from each player -->
+      <div class="col p-0 d-none d-md-block answer-count-container">
         {% for user in range(quiz.userCount) %}
             {% set usersName = quiz.usersNames[user] %}
             <p class="m-0 text-right"><b>{% if quiz.usersData[usersName]['answers'] | length == quiz.categories * quiz.questionsCount * usersQuestions %}<img src="https://img.icons8.com/flat_round/12/000000/checkmark.png" class="mr-2"/>{% endif %}{{ usersName }}</b>: {{ quiz.usersData[usersName]['answers'] | length }} / {{ quiz.categories * quiz.questionsCount * usersQuestions }}</p>
         {% endfor %}
+    </div>
 </div>
-</div>
+
+      
+   
 
 <hr class="mb-3">
 
