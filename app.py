@@ -201,6 +201,8 @@ def mark_answers():
         for checkedAnswerIndex in selected:
             # Get the users name that is being marked first
             locationOfTheAnswer = checkedAnswerIndex.split('-')
+            # locationOfTheAnswer, [0] user, [1] category, [2] answer,
+
             usersName = quiz['usersNames'][int(locationOfTheAnswer[0])]
             # The location of the answer in the database
             catNumberFromForm = int(locationOfTheAnswer[1])
@@ -214,6 +216,17 @@ def mark_answers():
 
             for num in range(answerNumberFromForm):
                 answerIndex = answerIndex + 1
+
+            quizMaster = quiz['usersNames'].index(username)
+            totalQuestionsPerRound = quiz['categories'] * quiz['questionsCount']
+
+            if quizMaster < int(locationOfTheAnswer[0]):
+                answerIndex += totalQuestionsPerRound
+
+            for roundIndex in range(quizMaster - 1):
+                answerIndex += totalQuestionsPerRound
+
+            
 
             # Updating the correct attribute to true in the database
             quiz['usersData'][usersName]['answers'][answerIndex]['correct'] = 'True'
