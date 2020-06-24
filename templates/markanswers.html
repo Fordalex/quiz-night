@@ -44,8 +44,7 @@
                                 {% set roundIndex = round * questionsPerRound %}
                                 <!-- if user is quizMaster minus the number of questions per round -->
                                 {% if user <= round %}
-                                <li class="ml-4"><span
-                                        class="{% if quiz.showAnswers == 'False' %}hidden{% endif %}">
+                                <li class="ml-4"><span>
                                         {% if quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex - questionsPerRound] %}
                                             {{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex - questionsPerRound]['answer'] }}
                                             <span class="float-right ml-3">
@@ -55,8 +54,7 @@
                                     </span>
                                 </li>
                                 {% else %}
-                                <li class="ml-4"><span
-                                        class="{% if quiz.showAnswers == 'False' %}hidden{% endif %}">
+                                <li class="ml-4"><span>
                                         {% if quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex] %}
                                             {{ quiz['usersData'][usersName]['answers'][answer + answerIndex + roundIndex]['answer'] }}
                                             <span class="float-right ml-3">

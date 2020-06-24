@@ -105,8 +105,32 @@ p,a {
     border: solid rgb(231, 231, 231) 1px;
 }
 
+.answers-list li {
+    padding-left: 8px;
+}
+
+
 .answers-list li:nth-child(even) {
     background-color: rgb(243, 243, 243);
+}
+
+/* review quiz */
+
+.answers-list-marked {
+    border: solid rgb(231, 231, 231) 1px;
+}
+
+.answers-list-marked li {
+    border-bottom: solid rgb(199, 199, 199) 1px;
+    padding-left: 8px;
+}
+
+.correct-answer-background {
+    background-color: rgb(238, 255, 212);
+}
+
+.incorrect-answer-background {
+    background-color: rgb(255, 221, 221);
 }
 
 /* media quiries */
