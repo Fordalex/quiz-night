@@ -28,7 +28,7 @@
 
         <!-- shows who's quiz master -->
         {% set quizMaster = quiz.usersNames[round] %}
-        <p class="text-secondary m-0 text-center">{{ quizMaster }} is the quiz master!</p>
+        <p class="text-secondary m-0 text-center">{{ quizMaster }} was the quiz master!</p>
     </div>
     <div class="col-12 m-0 p-0">
         <!-- each round -->
@@ -37,7 +37,7 @@
             {% set usersName = quiz.usersNames[user] %}
             {% if usersName != quizMaster %}
             <div class="round-container" id="list-item-{{round}}-{{user}}">
-                <h5 class="mt-3 mb-1">{{ usersName }} answers:</h5>
+                <h5 class="mt-3 mb-1">{{ usersName }}'s answers:</h5>
                 <ol class="p-0 answers-list px-3 pb-3">
                     <!-- display the categories -->
                     {% for cat in range(quiz.categories) %}

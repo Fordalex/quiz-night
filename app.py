@@ -176,12 +176,11 @@ def quiz_finished():
     quizName = session["quizName"]
     quiz = mongo.db.quizzes.find_one({'quizName': quizName})
 
-    
+    return redirect(url_for('index'))
 
-    return redirect(url_for('index', username=session["username"], quizName=quizName))
 
 # Mark the answers
-@app.route('/mark_answers')
+@app.route('/mark_answers', methods=['POST', 'GET'])
 def mark_answers():
     # Get the current user and the quiz from the database.
     quizName = session['quizName']
@@ -192,7 +191,38 @@ def mark_answers():
     quiz["showAnswers"] = "True"
     mongo.db.quizzes.update({'quizName': quizName},quiz)
 
+    # If user has sent the marked answers and update the database and redirect to the review page.
+    if request.method == 'POST':
+
+        # Get them marked answers from the form sent
+        selected = request.form.getlist('answer')
+
+        # Find the answers that have been stored, and update to true if they have been checked.
+        for checkedAnswerIndex in selected:
+            # Get the users name that is being marked first
+            locationOfTheAnswer = checkedAnswerIndex.split('-')
+            usersName = quiz['usersNames'][int(locationOfTheAnswer[0])]
+            # The location of the answer in the database
+            catNumberFromForm = int(locationOfTheAnswer[1])
+            answerNumberFromForm = int(locationOfTheAnswer[2])
+            answerIndex = 0
+
+            # Finding the index on the answer in the array inside the database
+            for catIndex in range(catNumberFromForm):
+                amountOfQuestions = int(quiz['questionsCount'])
+                answerIndex = answerIndex + amountOfQuestions
+
+            for num in range(answerNumberFromForm):
+                answerIndex = answerIndex + 1
+
+            # Updating the correct attribute to true in the database
+            quiz['usersData'][usersName]['answers'][answerIndex]['correct'] = 'True'
+            mongo.db.quizzes.update({'quizName': quizName},quiz)
+
+        return redirect(url_for('review_answers'))
+
     return render_template('markanswers.html', quiz=quiz, username=username)
+
 
 # Review answers
 @app.route('/review_answers')
@@ -203,12 +233,14 @@ def review_answers():
 
     return render_template('reviewanswers.html', quiz=quiz, username=username)
 
+
 # Log the user out.
 @app.route('/log_out')
 def log_out():
     session.clear()
 
     return redirect(url_for('menu'))
+
 
 # Remove the quiz from the database.
 @app.route('/quiz_ended')
@@ -219,6 +251,7 @@ def quiz_ended():
 
     session.clear()
     return redirect(url_for('menu'))
+
 
 if __name__ == '__main__':
     app.secret_key = 'mysecret'
