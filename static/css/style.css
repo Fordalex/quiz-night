@@ -4,6 +4,10 @@ body {
     overflow-x: hidden;
 }
 
+input[type="checkbox"] {
+    cursor: pointer;
+}
+
 .hidden {
     filter: blur(4px);
     text-decoration: line-through;

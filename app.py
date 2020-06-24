@@ -49,7 +49,7 @@ def settings():
         mongo.db.quizzes.insert_one(quiz)
         session['quizName'] = quizName
 
-        return redirect(url_for('user'))
+        return redirect(url_for('lobby'))
 
     # If viewing the page render this template.
     return render_template('settings.html')
@@ -66,7 +66,7 @@ def menu():
 
         if mongo.db.quizzes.find_one({'quizName': quizName, 'pin': pin}):
             session['quizName'] = quizName
-            return redirect(url_for('user'))
+            return redirect(url_for('lobby'))
 
         else:
             error = "The quiz you were looking for wasn't found, check the quiz name and the pin."
@@ -75,8 +75,8 @@ def menu():
 
 
 # Select the username or return to the quiz.
-@app.route('/user', methods=["GET", "POST"])
-def user():
+@app.route('/lobby', methods=["GET", "POST"])
+def lobby():
     quizName = session['quizName']
 
     if request.method == "POST":
@@ -87,7 +87,7 @@ def user():
 
     quizName = mongo.db.quizzes.find_one({'quizName': quizName})
 
-    return render_template('user.html', quiz=quizName)
+    return render_template('lobby.html', quiz=quizName)
 
 
 # Add the categories for the quiz.
@@ -176,11 +176,32 @@ def quiz_finished():
     quizName = session["quizName"]
     quiz = mongo.db.quizzes.find_one({'quizName': quizName})
 
-    # change the show answers to true
+    
+
+    return redirect(url_for('index', username=session["username"], quizName=quizName))
+
+# Mark the answers
+@app.route('/mark_answers')
+def mark_answers():
+    # Get the current user and the quiz from the database.
+    quizName = session['quizName']
+    username = session['username']
+    quiz = mongo.db.quizzes.find_one({'quizName': quizName})
+
+    # Change the show answers to true.
     quiz["showAnswers"] = "True"
     mongo.db.quizzes.update({'quizName': quizName},quiz)
 
-    return redirect(url_for('index', username=session["username"], quizName=quizName))
+    return render_template('markanswers.html', quiz=quiz, username=username)
+
+# Review answers
+@app.route('/review_answers')
+def review_answers():
+    quiz = session['quizName']
+    username = session['username']
+    quiz = mongo.db.quizzes.find_one({'quizName': quiz})
+
+    return render_template('reviewanswers.html', quiz=quiz, username=username)
 
 # Log the user out.
 @app.route('/log_out')

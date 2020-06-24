@@ -2,7 +2,7 @@
 {% block content %}
 
 <!-- Title and settings -->
-<div class="col-12 p-0">
+<div class="col-12 p-0 m-0">
     <p class="m-0 mr-3 d-inline">Logged in as: <b class="username-style">{{ username }}</b></p>
     <img src="https://img.icons8.com/fluent/25/000000/settings.png" class="click-icon float-right"
         data-toggle="collapse" href="#settings" />
@@ -20,12 +20,8 @@
 <h2 class="text-center mb-4">{{quiz.quizName}}</h2>
 {% if quizFinished == True %}
 <div class="row m-0 p-0">
-    <div class="col-6 m-0 px-2">
-        <a href="{{ url_for('quiz_finished') }}"><button class="btn btn-info container-fluid mb-3">Show
-                Answers</button></a>
-    </div>
-    <div class="col-6 m-0 px-2">
-        <a href="{{ url_for('quiz_finished') }}"><button class="btn btn-success container-fluid mb-3">Mark
+    <div class="col-12 m-0 p-0">
+        <a href="{{ url_for('mark_answers') }}"><button class="btn btn-success container-fluid mb-3">Mark
                 Answers</button></a>
     </div>
 </div>
