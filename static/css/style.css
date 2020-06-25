@@ -107,6 +107,7 @@ p,a {
 
 .answers-list li {
     padding-left: 8px;
+    padding-right: 4px;
 }
 
 
@@ -123,7 +124,20 @@ p,a {
 .answers-list-marked li {
     border-bottom: solid rgb(251, 251, 251) 1px;
     padding-left: 8px;
+    padding-right: 4px;
 }
+
+.answers-list-marked li img {
+    position: relative;
+    bottom: 2px;
+}
+
+.scores-list {
+    border: solid rgb(231, 231, 231) 1px;
+    padding: 5px;
+    list-style: none;
+}
+
 
 .correct-answer-background {
     background-color: rgb(238, 255, 212);

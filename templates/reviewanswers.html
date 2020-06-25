@@ -16,6 +16,25 @@
     </a>
 </div>
 
+<div class="row m-0 p-0">
+    <div class="col-12 m-0 p-0">
+        <h4 class="my-3">Score Board</h4>
+    </div>
+    <div class="col-12 m-0 p-0">
+        <div class="category-wrapper px-3">
+            {% for user in range(quiz.userCount) %}
+            <div class="category-container">
+                {% set usersName = quiz.usersNames[user] %}
+                <h6>{{loop.index}}. {{ usersName }}'s</h6>
+                <ul class="scores-list">
+                    <li class="text-center">x / x</li>
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
 
 <!-- the rounds -->
 <div class="row m-0 p-0">

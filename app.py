@@ -217,18 +217,19 @@ def mark_answers():
             for num in range(answerNumberFromForm):
                 answerIndex = answerIndex + 1
 
+            # Getting the quizmasters position in the database.
             quizMaster = quiz['usersNames'].index(username)
             totalQuestionsPerRound = quiz['categories'] * quiz['questionsCount']
 
+            # If the users turn was after the quizmaster the amount of questions in a round will be added to the index.
             if quizMaster < int(locationOfTheAnswer[0]):
                 answerIndex += totalQuestionsPerRound
 
+            # Adding the quetsions per round for each round the quizer wasn't asking quetsions.
             for roundIndex in range(quizMaster - 1):
                 answerIndex += totalQuestionsPerRound
 
-            
-
-            # Updating the correct attribute to true in the database
+            # Updating the 'correct' attribute to 'True' in the database.
             quiz['usersData'][usersName]['answers'][answerIndex]['correct'] = 'True'
             mongo.db.quizzes.update({'quizName': quizName},quiz)
 
