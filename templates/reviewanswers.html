@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<li>    <a href="{{ url_for('quiz_ended') }}">
+    <button class="btn btn-danger btn-sm">Finished Quiz</button>
+</a></li>
+
 <!-- Title and settings -->
 <div class="col-12 p-0">
     <p class="m-0 mr-3 d-inline">Logged in as: <b class="username-style">{{ username }}</b></p>
@@ -34,6 +38,8 @@
                     <li class="text-center background-silver p-1">{{ user['correctAnswers'] }} / {{ quiz.categories * quiz.questionsCount * usersQuestions }}</li>
                     {% elif loop.index == 3 %}
                     <li class="text-center background-bronze p-1">{{ user['correctAnswers'] }} / {{ quiz.categories * quiz.questionsCount * usersQuestions }}</li>
+                    {% else %}
+                    <li class="text-center p-1">{{ user['correctAnswers'] }} / {{ quiz.categories * quiz.questionsCount * usersQuestions }}</li>
                     {% endif %}
                 </ul>
             </div>

@@ -1,4 +1,11 @@
 {% extends 'base.html' %}
+
+<!-- Navigation links -->
+{% block nav_items %}
+<li class="active-link"><a href="/settings">Create Quiz<i class="fas fa-plus-square ml-2"></i></a></li>
+<li ><a href="/">Enter Quiz <i class="fas fa-door-open ml-1"></i></a></li>
+{% endblock %}
+
 {% block content %}
 
 <!-- Page title -->
@@ -9,7 +16,7 @@
 <div class="d-flex justify-content-center">
     <div class="enter-container">
         <div class="container-fluid p-0">
-            <h5 class="text-center my-2">Enter Your Settings</h5>
+            <h5 class="text-center my-2">Create a quiz</h5>
             <form method="POST" id="quiz_form">
                 <div class="row m-0 p-0">
                     <div class="col-12 m-0 p-0">
@@ -43,11 +50,6 @@
                     <div id="errorMessage"></div>
                 </div>
             </form>
-        </div>
-        <div class="row">
-            <div class="col-12 mt-2">
-                <a href="/"><button class="btn btn-warning container-fluid my-2">Menu</button></a>
-            </div>
         </div>
     </div>
 </div>

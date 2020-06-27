@@ -8,13 +8,18 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}} ">
     <link rel="shortcut icon" href="https://img.icons8.com/plasticine/100/000000/questions.png">
+    <script src="https://kit.fontawesome.com/d4ed0579d0.js" crossorigin="anonymous"></script>
     {% block js_content %}
 
     {% endblock %}
 
     <title>Quiz Night</title>
 </head>
-<body class="p-3">
+<body>
+
+    <ul class="navigation-bar">
+        {% block nav_items %}{% endblock %}
+    </ul>
 
     <div class="page-container">
     {%block content %}{% endblock %}

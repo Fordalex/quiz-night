@@ -1,4 +1,10 @@
 {% extends 'base.html' %}
+
+<!-- Navigation links -->
+{% block nav_items %}
+<li><a href="/">Exit<i class="fas fa-home ml-2"></i></a></li>
+{% endblock %}
+
 {% block content %}
 
 <h2 class="text-center mt-3 mb-2">{{ quiz.quizName }}</h2>

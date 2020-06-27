@@ -1,6 +1,27 @@
 @import './assets';
 @import './other';
-@import './colours.scss'
+@import './colours.scss';
+@import './navigation';
+@import './quiz';
 
+a {
+    color: black;
+}
 
+a:hover {
+    color: grey;
+    text-decoration: none;
+    .fas {
+        color: grey;
+        text-decoration: none;
+    }
+}
+
+a:active {
+    text-decoration: none;
+}
+
+.text-small {
+    font-size: 13px;
+}
 

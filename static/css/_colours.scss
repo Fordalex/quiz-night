@@ -1,6 +1,7 @@
 $gold: rgb(255, 234, 117);
 $silver: rgb(245, 245, 245);
 $bronze: rgb(238, 189, 54);
+$theme-colour: rgb(255, 193, 112);
 
 .background-gold {
     background: linear-gradient($gold, darken($gold, 25%));
@@ -12,4 +13,8 @@ $bronze: rgb(238, 189, 54);
 
 .background-bronze {
     background: linear-gradient($bronze, darken($bronze, 11%));
+}
+
+.fas {
+    color: darken($theme-colour, 50%)
 }

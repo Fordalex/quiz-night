@@ -1,4 +1,11 @@
 {% extends 'base.html' %}
+<!-- Navigation links -->
+{% block nav_items %}
+<li><a href="/settings">Create Quiz<i class="fas fa-plus-square ml-2"></i></a></li>
+<li class="active-link"><a href="/">Enter Quiz <i class="fas fa-door-open ml-1"></i></a></li>
+{% endblock %}
+
+<!-- page content -->
 {% block content %}
 
 <h2 class="text-center mt-3 mb-2">Quiz Master</h2>
@@ -15,7 +22,6 @@
                 <input type="number" class="form-control" name="pin" placeholder="5467" required>
                 <button type="submit" class="btn btn-success form-control mt-3">Enter</button>
             </form>
-            <a href="/settings"><button class="btn btn-warning mt-3 container-fluid">Create A Quiz</button></a>
             {% if error != False %}
                 <p class="text-danger mt-2">{{ error }}</p>
             {% endif %}
