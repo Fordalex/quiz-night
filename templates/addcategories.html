@@ -7,7 +7,7 @@
 
 <div class="d-flex justify-content-center">
     <div class="enter-container">
-        <h5 class="text-center my-3">Welcome {{ username }}, enter your categories for the quiz!</h5>
+        <h5 class="text-center my-3">Welcome {{username}}, enter your categories for the quiz!</h5>
         <form method="POST">
             {% for cat in range(quiz['categories']) %}
                 <label>Category {{ cat + 1 }}</label>

@@ -80,6 +80,7 @@ def lobby(quizName, pin):
 
     if request.method == "POST":
         session["username"] = request.form['username']
+        session['quizName'] = quizName
 
     if "username" in session:
         return redirect(url_for('categories'))
@@ -221,12 +222,15 @@ def mark_answers():
             totalQuestionsPerRound = quiz['categories'] * quiz['questionsCount']
 
             # If the users turn was after the quizmaster the amount of questions in a round will be added to the index.
-            if quizMaster < int(locationOfTheAnswer[0]):
-                answerIndex += totalQuestionsPerRound
+            if quizMaster >= 1:
+                if quizMaster < int(locationOfTheAnswer[0]):
+                    answerIndex += totalQuestionsPerRound
 
             # Adding the quetsions per round for each round the quizer wasn't asking quetsions.
             for roundIndex in range(quizMaster - 1):
                 answerIndex += totalQuestionsPerRound
+
+            print(len(quiz['usersNames']))
 
             # Updating the 'correct' attribute to 'True' in the database.
             quiz['usersData'][usersName]['answers'][answerIndex]['correct'] = 'True'
