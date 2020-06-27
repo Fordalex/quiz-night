@@ -1,0 +1,155 @@
+body {
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.hidden {
+    filter: blur(4px);
+    text-decoration: line-through;
+}
+
+hr {
+    margin: 2px;
+}
+
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Merriweather', serif;
+}
+
+p,a {
+    font-family: 'PT Sans', sans-serif;
+}
+
+.answers, .username-style {
+    font-family: 'Tenali Ramakrishna', sans-serif;
+}
+
+.click-icon {
+    cursor: pointer;
+}
+
+/* base */
+
+.page-container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* enter page */
+
+.enter-container {
+    width: 500px;
+}
+
+/* quiz */
+
+.username-style {
+    font-size: 24px;
+}
+
+.left-right-border {
+    border-right: solid grey 1px;
+    border-left: solid grey 1px;
+}
+
+.quiz-master p {
+    font-size: 30px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.answer-count-container {
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.category-wrapper {
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.category-container {
+    min-width: 100px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.category-list {
+    border: solid rgb(231, 231, 231) 1px;
+    padding: 5px;
+}
+
+.category-list li:nth-child(even) {
+    background-color: rgb(243, 243, 243);
+}
+
+.round-wrapper {
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.round-container {
+    min-width: 200px;
+    display: inline-block;
+    margin-right:  0 ;
+    margin-left: 0 ;
+}
+
+.answers-list {
+    border: solid rgb(231, 231, 231) 1px;
+}
+
+.answers-list li {
+    padding-left: 8px;
+    padding-right: 4px;
+}
+
+
+.answers-list li:nth-child(even) {
+    background-color: rgb(243, 243, 243);
+}
+
+/* review quiz */
+
+.answers-list-marked {
+    border: solid rgb(231, 231, 231) 1px;
+}
+
+.answers-list-marked li {
+    border-bottom: solid rgb(251, 251, 251) 1px;
+    padding-left: 8px;
+    padding-right: 4px;
+}
+
+.answers-list-marked li img {
+    position: relative;
+    bottom: 2px;
+}
+
+.scores-list {
+    border: solid rgb(231, 231, 231) 1px;
+    padding: 5px;
+    list-style: none;
+}
+
+
+.correct-answer-background {
+    background-color: rgb(238, 255, 212);
+}
+
+.incorrect-answer-background {
+    background-color: rgb(255, 221, 221);
+}
+
+/* media quiries */
+@media only screen and (min-width: 750px) {
+    .quiz-master p {
+        font-size: 15px;
+    }
+}

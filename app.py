@@ -63,11 +63,10 @@ def menu():
     if request.method == 'POST':
         quizName = request.form['quizName']
         pin = request.form['pin']
-
+        # check if quizname and pin match whats in the database
         if mongo.db.quizzes.find_one({'quizName': quizName, 'pin': pin}):
             session['quizName'] = quizName
             return redirect(url_for('lobby'))
-
         else:
             error = "The quiz you were looking for wasn't found, check the quiz name and the pin."
 

@@ -10,26 +10,26 @@
     <div class="enter-container">
         <div class="container-fluid p-0">
             <h5 class="text-center my-2">Enter Your Settings</h5>
-            <form method="POST">
+            <form method="POST" id="quiz_form">
                 <div class="row m-0 p-0">
                     <div class="col-12 m-0 p-0">
                         <label>Create a unique quiz name!</label>
-                        <input type="text" class="form-control" placeholder="Smith's Quiz" name="quizName" required>
+                        <input type="text" class="form-control" placeholder="Smith's Quiz" id="quiz_name" name="quizName" required>
                     </div>
                     <div class="col-6 p-0 pr-3">
                         <label>Secure Pin</label>
-                        <input type="number" class="form-control" placeholder="8849" name="pin" required>
+                        <input type="number" class="form-control" placeholder="8849" id="pin" name="pin" required>
                     </div>
                     <div class="col-6 p-0">
                         <label>Categories</label>
-                        <input type="number" name="categories" placeholder="3" class="form-control" required>
+                        <input type="number" name="categories" placeholder="3" id="categories" class="form-control" required>
                     </div>
                     <div class="col-12 p-0">
                         <label>Questions Per Category</label>
-                        <input type="number" name="questionsCount" placeholder="10" class="form-control" required>
+                        <input type="number" name="questionsCount" placeholder="10" id="questions_per_category" class="form-control" required>
                     </div>
                     <div class="col-12 m-0 p-0 mt-2">
-                        <label>How many people are taking part in the quiz?</label>
+                        <label>How many players?</label>
                     </div>
                     <div class="col-12 m-0 p-0">
                         <input type="number" class="form-control" min='2' placeholder="2" id="userCount" name="userCount" required>
@@ -40,6 +40,7 @@
                     <div id="usersContainer" class="container-fluid p-0">
 
                     </div>
+                    <div id="errorMessage"></div>
                 </div>
             </form>
         </div>
@@ -60,17 +61,43 @@
             var amountOfUsers = $('#userCount').val()
             $('#usersContainer').html('')
             if (amountOfUsers < 1) {
-                $('#usersContainer').append('<p class="text-danger mt-2">Please enter the amount of people taking part in the quiz.</p>');
+                $('#errorMessage').html('<p class="text-danger mt-2">Please enter the amount of people taking part in the quiz.</p>');
             } else {
                 for (let i = 0; i < amountOfUsers; i++) {
                 $('#usersContainer').append(`
                 <div class="col-12 m-0 p-0 mt-2">
                     <label>Player ${i + 1}</label>
-                    <input type="text" name="user${i + 1}" class="form-control" placeholder="Name" required>
+                    <input type="text" name="user${i + 1}" id="user${i + 1}" class="form-control" placeholder="Name" required>
                 </div>
                 `)
             }
-            $('#usersContainer').append('<button class="btn btn-success mt-3 container-fluid">Create Quiz</button>')
+            $('#usersContainer').append('<div class="btn btn-success mt-3 container-fluid" onclick="submitForm()">Create Quiz</div>')
+            }
+        }
+        function submitForm() {
+            var userCount = $('#userCount').val();
+            var usersNames = [];
+            var sameName = false;
+
+            for (let i = 0; i < userCount; i++) {
+                targetId = '#user'.concat(i + 1)
+                sameName = usersNames.includes($(targetId).val())
+                if (sameName == false) {
+                    usersNames.push($(targetId).val())
+                }
+            }
+            if ($('#quiz_name').val() == '') {
+                $('#errorMessage').html('<p class="text-danger mt-2">Please enter a quiz name.</p>');
+            } else if ($('#pin').val() == '') {
+                $('#errorMessage').html('<p class="text-danger mt-2">Please enter a secure pin.</p>');
+            } else if ($('#categories').val() == '') {
+                $('#errorMessage').html('<p class="text-danger mt-2">Please enter how many categories you would like.</p>');
+            } else if ($('#questions_per_category').val() == '') {
+                $('#errorMessage').html('<p class="text-danger mt-2">Please enter how many question per category.</p>');
+            } else if (usersNames.length == userCount) {
+                $('#quiz_form').submit()
+            } else {
+                $('#errorMessage').html('<p class="text-danger mt-2">Players names cannot match!</p>');
             }
         }
     </script>

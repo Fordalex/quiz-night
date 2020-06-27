@@ -1,0 +1,63 @@
+// Buttons
+.btn-success {
+    background: linear-gradient(rgb(216, 255, 157),rgb(167, 255, 35));
+    border: solid rgb(167, 255, 35) 1px;
+    color: black;
+}
+
+.btn-success:hover {
+    background: linear-gradient(rgb(109, 158, 35),rgb(126, 172, 58));
+    border: solid rgb(184, 184, 184) 1px;
+    color: white;
+}
+
+.btn-primary {
+    background: linear-gradient(rgb(111, 132, 255),rgb(22, 87, 240));
+    border: solid rgb(35, 185, 255) 1px;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(rgb(35, 47, 158),rgb(58, 149, 172));
+    border: solid rgb(184, 184, 184) 1px;
+    color: grey;
+}
+
+.btn-info {
+    background: linear-gradient(rgb(157, 219, 255),rgb(22, 207, 240));
+    border: solid rgb(35, 185, 255) 1px;
+    color: black;
+}
+
+.btn-info:hover {
+    background: linear-gradient(rgb(35, 133, 158),rgb(58, 149, 172));
+    border: solid rgb(184, 184, 184) 1px;
+    color: white;
+}
+
+.btn-warning {
+    background: linear-gradient(rgb(255, 245, 157),rgb(240, 225, 22));
+    border: solid rgb(255, 233, 35) 1px;
+    color: black;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(rgb(158, 146, 35),rgb(172, 165, 58));
+    border: solid rgb(184, 184, 184) 1px;
+    color: white;
+}
+
+.btn-danger {
+    background: linear-gradient(rgb(255, 157, 157),rgb(240, 22, 22));
+    border: solid rgb(255, 35, 35) 1px;
+    color: black;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(rgb(158, 35, 35),rgb(172, 58, 58));
+    border: solid rgb(184, 184, 184) 1px;
+    color: white;
+}
+
+// Inputs
+
