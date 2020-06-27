@@ -23,6 +23,7 @@ def settings():
     if request.method == 'POST':
         quizName = request.form['quizName']
         userCount = request.form['userCount']
+        pin = request.form['pin']
         arrayOfUsers = {}
         arrayOfNames = []
 
@@ -38,7 +39,7 @@ def settings():
         # Sorting the quiz data and sending it to the database.
         quiz = {
             'quizName': quizName,
-            'pin': request.form['pin'],
+            'pin': pin,
             'categories': int(request.form['categories']),
             'questionsCount': int(request.form['questionsCount']),
             'userCount': int(userCount),
@@ -49,7 +50,7 @@ def settings():
         mongo.db.quizzes.insert_one(quiz)
         session['quizName'] = quizName
 
-        return redirect(url_for('lobby'))
+        return redirect(url_for('lobby', quizName=quizName, pin=pin))
 
     # If viewing the page render this template.
     return render_template('settings.html')
@@ -66,7 +67,7 @@ def menu():
         # check if quizname and pin match whats in the database
         if mongo.db.quizzes.find_one({'quizName': quizName, 'pin': pin}):
             session['quizName'] = quizName
-            return redirect(url_for('lobby'))
+            return redirect(url_for('lobby', quizName=quizName, pin=pin))
         else:
             error = "The quiz you were looking for wasn't found, check the quiz name and the pin."
 
@@ -74,9 +75,8 @@ def menu():
 
 
 # Select the username or return to the quiz.
-@app.route('/lobby', methods=["GET", "POST"])
-def lobby():
-    quizName = session['quizName']
+@app.route('/lobby/<quizName>/<pin>/', methods=["GET", "POST"])
+def lobby(quizName, pin):
 
     if request.method == "POST":
         session["username"] = request.form['username']
