@@ -1,0 +1,5 @@
+.background-gold {
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffe139), to(#ffe553));
+  background: linear-gradient(#ffe139, #ffe553);
+}
+/*# sourceMappingURL=variables.css.map */

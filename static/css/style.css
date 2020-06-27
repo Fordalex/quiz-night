@@ -221,4 +221,19 @@ p, a {
     font-size: 15px;
   }
 }
+
+.background-gold {
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffea75), to(#f5cf00));
+  background: linear-gradient(#ffea75, #f5cf00);
+}
+
+.background-silver {
+  background: -webkit-gradient(linear, left top, left bottom, from(whitesmoke), to(#e1e1e1));
+  background: linear-gradient(whitesmoke, #e1e1e1);
+}
+
+.background-bronze {
+  background: -webkit-gradient(linear, left top, left bottom, from(#eebd36), to(#daa412));
+  background: linear-gradient(#eebd36, #daa412);
+}
 /*# sourceMappingURL=style.css.map */

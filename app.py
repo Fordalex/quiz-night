@@ -248,7 +248,29 @@ def review_answers():
     username = session['username']
     quiz = mongo.db.quizzes.find_one({'quizName': quiz})
 
-    return render_template('reviewanswers.html', quiz=quiz, username=username)
+    marked = []
+
+    usersDict = quiz['usersData']
+
+    for index, user in enumerate(usersDict):
+        usersName = quiz['usersNames'][index]
+        correctAnswers = 0
+
+        for answer in usersDict[usersName]['answers']:
+            if answer['correct'] == 'True':
+                correctAnswers += 1
+
+        userDict = {
+            'username': usersName,
+            'correctAnswers': correctAnswers,
+        }
+
+        marked.append(userDict)
+
+    marked = sorted(marked, key= lambda i: i['correctAnswers'], reverse=True)
+    print(marked)
+
+    return render_template('reviewanswers.html', quiz=quiz, username=username, markedAnswers=marked)
 
 
 # Log the user out.
